@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assumption Gap Quiz | Stipum</title>
+  <meta name="description" content="Five questions about your last engagement. See what your counterparty almost certainly assumed differently.">
+  <meta property="og:title" content="Assumption Gap Quiz | Stipum">
+  <meta property="og:description" content="Five questions about your last engagement. See what your counterparty almost certainly assumed differently.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖</text></svg>">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #F7F6F3;
+      --card: #FFFFFF;
+      --text: #1A1A1A;
+      --muted: #6B7280;
+      --accent: #2057D4;
+      --accent-hover: #1744B0;
+      --accent-light: #EEF3FD;
+      --border: #E4E4E7;
+      --radius: 14px;
+      --radius-sm: 8px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 0 16px 60px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #app {
+      width: 100%;
+      max-width: 580px;
+    }
+
+    /* ── Screens ── */
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+      animation: screenIn 0.35s ease;
+    }
+
+    @keyframes screenIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Brand header ── */
+    .brand {
+      padding: 32px 0 0;
+      margin-bottom: 36px;
+    }
+
+    .brand-wordmark {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* ── Welcome ── */
+    .welcome-title {
+      font-size: clamp(28px, 7vw, 40px);
+      font-weight: 800;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .welcome-body {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--muted);
+      margin-bottom: 40px;
+      max-width: 480px;
+    }
+
+    .context-heading {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .context-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+
+    .ctx-btn {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 14px 16px;
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.18s, background 0.18s, box-shadow 0.18s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .ctx-btn:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(32, 87, 212, 0.08);
+    }
+
+    .ctx-btn.selected {
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    .ctx-icon {
+      font-size: 22px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .ctx-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .ctx-sub {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.15s, opacity 0.18s, box-shadow 0.18s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      font-size: 15px;
+      padding: 15px 22px;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(32, 87, 212, 0.3);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      font-size: 15px;
+      padding: 15px 22px;
+      border: 2px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      border-color: #aaa;
+      color: var(--text);
+    }
+
+    .btn-block {
+      display: block;
+      width: 100%;
+      text-align: center;
+      border-radius: var(--radius);
+      padding: 17px 22px;
+      font-size: 16px;
+    }
+
+    /* ── Progress ── */
+    .progress-wrap {
+      padding: 28px 0 0;
+      margin-bottom: 32px;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .progress-step {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .progress-count {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .progress-bar {
+      display: flex;
+      gap: 5px;
+    }
+
+    .progress-seg {
+      height: 3px;
+      flex: 1;
+      border-radius: 2px;
+      background: var(--border);
+      transition: background 0.35s;
+    }
+
+    .progress-seg.done {
+      background: var(--accent);
+    }
+
+    /* ── Question ── */
+    .q-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .q-text {
+      font-size: clamp(21px, 5vw, 28px);
+      font-weight: 800;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+    }
+
+    .q-hint {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      padding: 16px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--card);
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(32, 87, 212, 0.1);
+    }
+
+    textarea::placeholder {
+      color: #BBBBBE;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .btn-row .btn-primary {
+      flex: 1;
+    }
+
+    /* ── Analyzing ── */
+    .analyzing-wrap {
+      text-align: center;
+      padding: 110px 0 80px;
+    }
+
+    .pulse-ring {
+      display: flex;
+      justify-content: center;
+      gap: 9px;
+      margin-bottom: 30px;
+    }
+
+    .pulse-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: blink 1.3s ease-in-out infinite;
+    }
+
+    .pulse-dot:nth-child(2) { animation-delay: 0.22s; }
+    .pulse-dot:nth-child(3) { animation-delay: 0.44s; }
+
+    @keyframes blink {
+      0%, 80%, 100% { opacity: 0.18; transform: scale(0.75); }
+      40%            { opacity: 1;    transform: scale(1); }
+    }
+
+    .analyzing-headline {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .analyzing-sub {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* ── Results ── */
+    .results-brand {
+      padding: 32px 0 0;
+      margin-bottom: 24px;
+    }
+
+    .results-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .results-title {
+      font-size: clamp(23px, 5.5vw, 32px);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+      margin-bottom: 12px;
+    }
+
+    .results-sub {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    /* ── Gap cards ── */
+    .gaps {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      margin: 28px 0 14px;
+    }
+
+    .gap-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 20px;
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .gap-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .gap-num {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 7px;
+    }
+
+    .gap-title {
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 9px;
+    }
+
+    .gap-detail {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── CTA ── */
+    .cta-card {
+      background: var(--text);
+      border-radius: var(--radius);
+      padding: 30px 24px;
+      text-align: center;
+      margin-top: 16px;
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .cta-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .cta-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .cta-body {
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      margin-bottom: 22px;
+    }
+
+    .btn-cta {
+      display: block;
+      background: #fff;
+      color: var(--text);
+      text-decoration: none;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 16px 24px;
+      border-radius: var(--radius-sm);
+      transition: background 0.18s, transform 0.15s;
+    }
+
+    .btn-cta:hover {
+      background: #f0f0f0;
+      transform: translateY(-1px);
+    }
+
+    .restart-wrap {
+      text-align: center;
+      padding: 22px 0 4px;
+    }
+
+    .btn-restart {
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--muted);
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .btn-restart:hover {
+      color: var(--text);
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 380px) {
+      .context-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ═══ WELCOME ═══ -->
+  <div class="screen active" id="screen-welcome">
+    <div class="brand">
+      <div class="brand-wordmark">Stipum</div>
+    </div>
+
+    <h1 class="welcome-title">The Assumption<br>Gap Quiz</h1>
+    <p class="welcome-body">
+      Five questions about your last bilateral commitment — a job, a consulting engagement, an insurance claim, or any professional agreement where two parties worked together.<br><br>
+      When you finish, you'll see the gaps your counterparty almost certainly carried.
+    </p>
+
+    <div class="context-heading">What kind of engagement?</div>
+    <div class="context-grid">
+      <button class="ctx-btn" data-ctx="construction" onclick="selectCtx(this)">
+        <div class="ctx-icon">🏗</div>
+        <div class="ctx-label">Construction</div>
+        <div class="ctx-sub">Job awarded or performed</div>
+      </button>
+      <button class="ctx-btn" data-ctx="consulting" onclick="selectCtx(this)">
+        <div class="ctx-icon">💼</div>
+        <div class="ctx-label">Consulting</div>
+        <div class="ctx-sub">Project or engagement</div>
+      </button>
+      <button class="ctx-btn" data-ctx="insurance" onclick="selectCtx(this)">
+        <div class="ctx-icon">📋</div>
+        <div class="ctx-label">Insurance</div>
+        <div class="ctx-sub">Policy or claim</div>
+      </button>
+      <button class="ctx-btn" data-ctx="other" onclick="selectCtx(this)">
+        <div class="ctx-icon">🤝</div>
+        <div class="ctx-label">Other</div>
+        <div class="ctx-sub">Professional agreement</div>
+      </button>
+    </div>
+
+    <button class="btn btn-primary btn-block" id="btn-start" onclick="startQuiz()" disabled>
+      Start the quiz →
+    </button>
+  </div>
+
+  <!-- ═══ QUESTIONS ═══ -->
+  <div class="screen" id="screen-questions">
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <span class="progress-step" id="prog-step">Question 1 of 5</span>
+      </div>
+      <div class="progress-bar" id="prog-bar">
+        <div class="progress-seg done"></div>
+        <div class="progress-seg"></div>
+        <div class="progress-seg"></div>
+        <div class="progress-seg"></div>
+        <div class="progress-seg"></div>
+      </div>
+    </div>
+
+    <div class="q-label" id="q-label">Question 1</div>
+    <h2 class="q-text" id="q-text"></h2>
+    <p class="q-hint" id="q-hint"></p>
+    <textarea id="q-answer" oninput="checkAnswer()" placeholder="Write as much or as little as you like…"></textarea>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" id="btn-back" onclick="goBack()" style="display:none;">← Back</button>
+      <button class="btn btn-primary" id="btn-next" onclick="goNext()" disabled>
+        <span id="btn-next-label">Next →</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══ ANALYZING ═══ -->
+  <div class="screen" id="screen-analyzing">
+    <div class="analyzing-wrap">
+      <div class="pulse-ring">
+        <div class="pulse-dot"></div>
+        <div class="pulse-dot"></div>
+        <div class="pulse-dot"></div>
+      </div>
+      <div class="analyzing-headline">Identifying assumption gaps…</div>
+      <div class="analyzing-sub">Mapping what your counterparty likely saw differently</div>
+    </div>
+  </div>
+
+  <!-- ═══ RESULTS ═══ -->
+  <div class="screen" id="screen-results">
+    <div class="results-brand">
+      <div class="brand-wordmark">Stipum</div>
+    </div>
+    <div class="results-eyebrow">Your Assumption Gaps</div>
+    <h2 class="results-title">Here's what your counterparty likely saw differently.</h2>
+    <p class="results-sub" id="results-sub"></p>
+
+    <div class="gaps" id="gaps-list"></div>
+
+    <div class="cta-card" id="cta-card">
+      <div class="cta-title">Close the gap before it opens.</div>
+      <div class="cta-body">
+        A Stipum declaration lets both sides put their assumptions in writing before the work starts. It takes minutes, and it changes everything about how an engagement ends.
+      </div>
+      <a href="https://stipum-mutual-sync.base44.app" target="_blank" rel="noopener noreferrer" class="btn-cta">
+        File a Stipum declaration →
+      </a>
+    </div>
+
+    <div class="restart-wrap">
+      <button class="btn-restart" onclick="resetQuiz()">Take the quiz again</button>
+    </div>
+  </div>
+
+</div>
+<script>
+  /* ── Data ── */
+  const QUESTIONS = [
+    {
+      text: "What did your side include in this commitment?",
+      hint: "Think about what you understood yourself to be providing, doing, or delivering — what was on your side of the table.",
+      placeholder: "e.g. I agreed to handle the full kitchen renovation, including demo, rough-in, and all finish work…"
+    },
+    {
+      text: "What conditions were you counting on?",
+      hint: "What assumptions did you carry into this engagement — about access, timing, other people's actions, or the environment you'd be working in?",
+      placeholder: "e.g. I assumed site access Monday through Saturday, and that the prior contractor's rough-in was code-compliant…"
+    },
+    {
+      text: "Who was responsible for what?",
+      hint: "How did you understand the division of tasks, coordination, and decision-making between you and the other party?",
+      placeholder: "e.g. I thought they were handling permits and inspections — my role was only the physical work…"
+    },
+    {
+      text: "What did successful completion look like to you?",
+      hint: "What did you picture when you imagined this engagement being finished? What would make it fully done in your eyes?",
+      placeholder: "e.g. Done meant the client walked through, signed off on the punch list, and made final payment…"
+    },
+    {
+      text: "What were you most uncertain about?",
+      hint: "What did you privately worry about or feel unsure of going in — things you may not have said out loud to the other side?",
+      placeholder: "e.g. I wasn't sure how they'd handle scope changes, or whether they understood how long things actually take…"
+    }
+  ];
+
+  const CONTEXTS = {
+    construction: {
+      sub: "These gaps are common across construction engagements — contractor to owner, owner to sub, developer to anyone. They don't mean something went wrong. They mean two parties assumed the same agreement meant different things.",
+      gaps: [
+        {
+          title: "What 'included' actually covered",
+          detail: "Scope of work — materials, labor, cleanup, permits, allowances — is almost never parsed the same way by both parties. What felt clearly implied on your side likely wasn't on theirs, and vice versa."
+        },
+        {
+          title: "Who absorbs it when conditions change",
+          detail: "Unexpected conditions behind walls, below grade, or at the edges of the project rarely fall cleanly into either side's responsibility as originally imagined. Both parties assumed the other would absorb the surprise."
+        },
+        {
+          title: "What the punch list actually represents",
+          detail: "To one side, punch list items are minor finishing details. To the other, they represent the full measure of delivery. This single gap accounts for more end-of-project friction than almost anything else."
+        },
+        {
+          title: "What triggers payment",
+          detail: "'Substantial completion' is interpreted through the lens of who writes the check and who cashes it. Milestones that felt clear in the agreement are almost never defined the same way when it's time to apply them."
+        },
+        {
+          title: "Who coordinates the moving parts",
+          detail: "Inspections, utility coordination, subcontractor scheduling, and neighbor communication are assumed to be someone else's job — on both sides simultaneously — until they don't happen."
+        }
+      ]
+    },
+    consulting: {
+      sub: "These gaps appear in nearly every consulting relationship — regardless of firm size, fee structure, or how well the parties knew each other. They're not signs of bad faith. They're signs of assumptions that were never stated.",
+      gaps: [
+        {
+          title: "What the deliverable actually is",
+          detail: "Deck, model, memo, working session, or something else — the format, depth, and medium of the output is almost never specified clearly enough to match both sides' expectations."
+        },
+        {
+          title: "How many revision rounds are included",
+          detail: "Consultants typically scope one revision cycle. Clients typically expect refinement until satisfied. Neither party usually states this expectation — so it only surfaces after the first draft."
+        },
+        {
+          title: "What 'done' means",
+          detail: "Delivered vs. reviewed vs. approved vs. implemented vs. adopted — the state at which the engagement is complete was likely defined differently by each party and never reconciled before it mattered."
+        },
+        {
+          title: "Access to people, data, and internal context",
+          detail: "The consultant assumed they'd have the access they needed when they needed it. The client assumed the consultant would ask for specific things. The gap lives in what was never explicitly requested or offered."
+        },
+        {
+          title: "Who owns the output",
+          detail: "IP rights, reuse permissions, and whether the work product belongs to the engagement or the firm are rarely negotiated upfront. Both sides carry silent assumptions that almost never align."
+        }
+      ]
+    },
+    insurance: {
+      sub: "These gaps appear in nearly every insurance engagement — at claim time, at renewal, or any time both parties apply the policy language to a real situation. They're not about bad actors. They're about the distance between what was sold and what was understood.",
+      gaps: [
+        {
+          title: "What 'covered' means in practice",
+          detail: "The practical scope of coverage rarely matches what the insured believed they had. Exclusions, endorsements, and defined terms in the policy are applied very differently than the plain-language summary used to describe it."
+        },
+        {
+          title: "What documentation a claim actually requires",
+          detail: "The evidentiary threshold for a valid claim is almost always higher than the policyholder expected — and what constitutes adequate proof is assumed differently by each party from the start."
+        },
+        {
+          title: "How long resolution takes",
+          detail: "Claimants interpret timelines based on what feels reasonable. Insurers interpret them procedurally. The distance between 'a few weeks' and 'standard processing time' is often measured in months."
+        },
+        {
+          title: "What counts as a qualifying loss",
+          detail: "The boundary between covered damage and a pre-existing condition or maintenance issue is drawn in a very different place by each party. This is the gap that creates the most conflict — and the most litigation."
+        },
+        {
+          title: "What filing means for future coverage",
+          detail: "The downstream effects of a claim on future premiums, eligibility, and renewal terms are almost never part of the filing conversation — but they're almost always part of the conversation afterward."
+        }
+      ]
+    },
+    other: {
+      sub: "These gaps appear across virtually every professional engagement, regardless of industry or relationship. They're not symptoms of a bad contract or a bad relationship. They're what happens when two parties each assume that what felt obvious to them was equally obvious to the other side.",
+      gaps: [
+        {
+          title: "Where each side drew their boundary",
+          detail: "The line between your responsibility and theirs was almost certainly drawn in a different place by each of you — based on what felt obvious, not on what was stated. That line is where most disputes eventually land."
+        },
+        {
+          title: "Which conditions each side was counting on",
+          detail: "Both parties entered the engagement carrying implicit assumptions about context, access, and circumstances. When those conditions shifted, each side expected the other to absorb the change."
+        },
+        {
+          title: "Who owned the gray areas",
+          detail: "Coordination tasks, follow-up, edge cases, and handoffs rarely have an explicit owner. Both sides tend to assume the other is handling whatever wasn't specifically assigned."
+        },
+        {
+          title: "What 'done' actually meant",
+          detail: "Even when both sides used the same words — delivered, completed, resolved, approved — they were picturing different states. This gap surfaces at the end of the engagement, when it's hardest to fix."
+        },
+        {
+          title: "What each side privately worried about",
+          detail: "The uncertainties each party carried going in were almost never shared with the other side. They often overlapped — meaning both parties carried the same concern without ever naming it, or addressing it together."
+        }
+      ]
+    }
+  };
+
+  /* ── State ── */
+  let ctx = null;
+  let step = 0;
+  let answers = [];
+
+  /* ── Welcome ── */
+  function selectCtx(btn) {
+    document.querySelectorAll('.ctx-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    ctx = btn.dataset.ctx;
+    document.getElementById('btn-start').disabled = false;
+  }
+
+  function startQuiz() {
+    answers = new Array(QUESTIONS.length).fill('');
+    step = 0;
+    showScreen('screen-questions');
+    renderQuestion();
+  }
+
+  /* ── Questions ── */
+  function renderQuestion() {
+    const q = QUESTIONS[step];
+    document.getElementById('q-label').textContent = `Question ${step + 1}`;
+    document.getElementById('q-text').textContent = q.text;
+    document.getElementById('q-hint').textContent = q.hint;
+
+    const ta = document.getElementById('q-answer');
+    ta.value = answers[step];
+    ta.placeholder = q.placeholder;
+    ta.focus();
+
+    document.getElementById('prog-step').textContent = `Question ${step + 1} of 5`;
+    document.querySelectorAll('.progress-seg').forEach((s, i) => {
+      s.classList.toggle('done', i <= step);
+    });
+
+    document.getElementById('btn-back').style.display = step === 0 ? 'none' : '';
+    document.getElementById('btn-next-label').textContent =
+      step === QUESTIONS.length - 1 ? 'See my gaps →' : 'Next →';
+
+    checkAnswer();
+  }
+
+  function checkAnswer() {
+    const len = document.getElementById('q-answer').value.trim().length;
+    document.getElementById('btn-next').disabled = len < 8;
+  }
+
+  function saveAnswer() {
+    answers[step] = document.getElementById('q-answer').value.trim();
+  }
+
+  function goNext() {
+    saveAnswer();
+    if (step === QUESTIONS.length - 1) {
+      runAnalysis();
+    } else {
+      step++;
+      renderQuestion();
+    }
+  }
+
+  function goBack() {
+    saveAnswer();
+    step--;
+    renderQuestion();
+  }
+
+  /* ── Analyzing ── */
+  function runAnalysis() {
+    showScreen('screen-analyzing');
+    setTimeout(showResults, 2600);
+  }
+
+  /* ── Results ── */
+  function showResults() {
+    const data = CONTEXTS[ctx];
+    document.getElementById('results-sub').textContent = data.sub;
+
+    const list = document.getElementById('gaps-list');
+    list.innerHTML = '';
+    data.gaps.forEach((g, i) => {
+      const card = document.createElement('div');
+      card.className = 'gap-card';
+      card.innerHTML = `
+        <div class="gap-num">Gap ${i + 1}</div>
+        <div class="gap-title">${g.title}</div>
+        <div class="gap-detail">${g.detail}</div>
+      `;
+      list.appendChild(card);
+    });
+
+    document.getElementById('cta-card').classList.remove('visible');
+    showScreen('screen-results');
+
+    // Staggered card reveal
+    const cards = document.querySelectorAll('.gap-card');
+    cards.forEach((card, i) => {
+      setTimeout(() => card.classList.add('visible'), 200 + i * 200);
+    });
+    setTimeout(() => {
+      document.getElementById('cta-card').classList.add('visible');
+    }, 200 + cards.length * 200 + 100);
+  }
+
+  /* ── Helpers ── */
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function resetQuiz() {
+    ctx = null;
+    step = 0;
+    answers = [];
+    document.querySelectorAll('.ctx-btn').forEach(b => b.classList.remove('selected'));
+    document.getElementById('btn-start').disabled = true;
+    showScreen('screen-welcome');
+  }
+</script>
+</body>
+</html>
