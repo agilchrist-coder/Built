@@ -366,10 +366,13 @@
       margin-bottom: 12px;
     }
 
-    .results-sub {
-      font-size: 15px;
-      line-height: 1.7;
+    .results-framing {
+      font-size: 14px;
+      line-height: 1.75;
       color: var(--muted);
+      border-left: 3px solid var(--border);
+      padding-left: 14px;
+      margin-top: 4px;
     }
 
     /* ── Gap cards ── */
@@ -404,17 +407,11 @@
       margin-bottom: 7px;
     }
 
-    .gap-title {
-      font-size: 17px;
-      font-weight: 700;
-      line-height: 1.3;
-      margin-bottom: 9px;
-    }
-
-    .gap-detail {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.7;
+    .gap-sentence {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.65;
+      color: var(--text);
     }
 
     /* ── CTA ── */
@@ -588,7 +585,7 @@
     </div>
     <div class="results-eyebrow">Your Assumption Gaps</div>
     <h2 class="results-title">Here's what your counterparty likely saw differently.</h2>
-    <p class="results-sub" id="results-sub"></p>
+    <p class="results-framing">This quiz shows what a typical counterparty carries. A real Stipum filing captures what yours actually assumed — independently, before either party can see the other's answers.</p>
 
     <div class="gaps" id="gaps-list"></div>
 
@@ -640,103 +637,33 @@
 
   const CONTEXTS = {
     construction: {
-      sub: "These gaps are common across construction engagements — contractor to owner, owner to sub, developer to anyone. They don't mean something went wrong. They mean two parties assumed the same agreement meant different things.",
       gaps: [
-        {
-          title: "What 'included' actually covered",
-          detail: "Scope of work — materials, labor, cleanup, permits, allowances — is almost never parsed the same way by both parties. What felt clearly implied on your side likely wasn't on theirs, and vice versa."
-        },
-        {
-          title: "Who absorbs it when conditions change",
-          detail: "Unexpected conditions behind walls, below grade, or at the edges of the project rarely fall cleanly into either side's responsibility as originally imagined. Both parties assumed the other would absorb the surprise."
-        },
-        {
-          title: "What the punch list actually represents",
-          detail: "To one side, punch list items are minor finishing details. To the other, they represent the full measure of delivery. This single gap accounts for more end-of-project friction than almost anything else."
-        },
-        {
-          title: "What triggers payment",
-          detail: "'Substantial completion' is interpreted through the lens of who writes the check and who cashes it. Milestones that felt clear in the agreement are almost never defined the same way when it's time to apply them."
-        },
-        {
-          title: "Who coordinates the moving parts",
-          detail: "Inspections, utility coordination, subcontractor scheduling, and neighbor communication are assumed to be someone else's job — on both sides simultaneously — until they don't happen."
-        }
+        "The GC assumed substrate prep was in the sub's price.",
+        "The sub assumed the GC was handling access and sequencing.",
+        "Nobody said any of it out loud because everybody assumed everybody knew."
       ]
     },
     consulting: {
-      sub: "These gaps appear in nearly every consulting relationship — regardless of firm size, fee structure, or how well the parties knew each other. They're not signs of bad faith. They're signs of assumptions that were never stated.",
       gaps: [
-        {
-          title: "What the deliverable actually is",
-          detail: "Deck, model, memo, working session, or something else — the format, depth, and medium of the output is almost never specified clearly enough to match both sides' expectations."
-        },
-        {
-          title: "How many revision rounds are included",
-          detail: "Consultants typically scope one revision cycle. Clients typically expect refinement until satisfied. Neither party usually states this expectation — so it only surfaces after the first draft."
-        },
-        {
-          title: "What 'done' means",
-          detail: "Delivered vs. reviewed vs. approved vs. implemented vs. adopted — the state at which the engagement is complete was likely defined differently by each party and never reconciled before it mattered."
-        },
-        {
-          title: "Access to people, data, and internal context",
-          detail: "The consultant assumed they'd have the access they needed when they needed it. The client assumed the consultant would ask for specific things. The gap lives in what was never explicitly requested or offered."
-        },
-        {
-          title: "Who owns the output",
-          detail: "IP rights, reuse permissions, and whether the work product belongs to the engagement or the firm are rarely negotiated upfront. Both sides carry silent assumptions that almost never align."
-        }
+        "The client assumed revisions were unlimited.",
+        "The consultant assumed two rounds was industry standard.",
+        "The client assumed the consultant owned execution.",
+        "The consultant assumed they were advising only."
       ]
     },
     insurance: {
-      sub: "These gaps appear in nearly every insurance engagement — at claim time, at renewal, or any time both parties apply the policy language to a real situation. They're not about bad actors. They're about the distance between what was sold and what was understood.",
       gaps: [
-        {
-          title: "What 'covered' means in practice",
-          detail: "The practical scope of coverage rarely matches what the insured believed they had. Exclusions, endorsements, and defined terms in the policy are applied very differently than the plain-language summary used to describe it."
-        },
-        {
-          title: "What documentation a claim actually requires",
-          detail: "The evidentiary threshold for a valid claim is almost always higher than the policyholder expected — and what constitutes adequate proof is assumed differently by each party from the start."
-        },
-        {
-          title: "How long resolution takes",
-          detail: "Claimants interpret timelines based on what feels reasonable. Insurers interpret them procedurally. The distance between 'a few weeks' and 'standard processing time' is often measured in months."
-        },
-        {
-          title: "What counts as a qualifying loss",
-          detail: "The boundary between covered damage and a pre-existing condition or maintenance issue is drawn in a very different place by each party. This is the gap that creates the most conflict — and the most litigation."
-        },
-        {
-          title: "What filing means for future coverage",
-          detail: "The downstream effects of a claim on future premiums, eligibility, and renewal terms are almost never part of the filing conversation — but they're almost always part of the conversation afterward."
-        }
+        "The adjuster assumed the contractor's scope included code upgrades.",
+        "The contractor assumed supplements would be approved before mobilization.",
+        "Nobody aligned on any of it before work began."
       ]
     },
     other: {
-      sub: "These gaps appear across virtually every professional engagement, regardless of industry or relationship. They're not symptoms of a bad contract or a bad relationship. They're what happens when two parties each assume that what felt obvious to them was equally obvious to the other side.",
       gaps: [
-        {
-          title: "Where each side drew their boundary",
-          detail: "The line between your responsibility and theirs was almost certainly drawn in a different place by each of you — based on what felt obvious, not on what was stated. That line is where most disputes eventually land."
-        },
-        {
-          title: "Which conditions each side was counting on",
-          detail: "Both parties entered the engagement carrying implicit assumptions about context, access, and circumstances. When those conditions shifted, each side expected the other to absorb the change."
-        },
-        {
-          title: "Who owned the gray areas",
-          detail: "Coordination tasks, follow-up, edge cases, and handoffs rarely have an explicit owner. Both sides tend to assume the other is handling whatever wasn't specifically assigned."
-        },
-        {
-          title: "What 'done' actually meant",
-          detail: "Even when both sides used the same words — delivered, completed, resolved, approved — they were picturing different states. This gap surfaces at the end of the engagement, when it's hardest to fix."
-        },
-        {
-          title: "What each side privately worried about",
-          detail: "The uncertainties each party carried going in were almost never shared with the other side. They often overlapped — meaning both parties carried the same concern without ever naming it, or addressing it together."
-        }
+        "They assumed you owned the outcome.",
+        "You assumed you were responsible for the process.",
+        "They assumed the timeline had flexibility.",
+        "You assumed the deadline was fixed."
       ]
     }
   };
@@ -819,17 +746,15 @@
   /* ── Results ── */
   function showResults() {
     const data = CONTEXTS[ctx];
-    document.getElementById('results-sub').textContent = data.sub;
 
     const list = document.getElementById('gaps-list');
     list.innerHTML = '';
-    data.gaps.forEach((g, i) => {
+    data.gaps.forEach((sentence, i) => {
       const card = document.createElement('div');
       card.className = 'gap-card';
       card.innerHTML = `
         <div class="gap-num">Gap ${i + 1}</div>
-        <div class="gap-title">${g.title}</div>
-        <div class="gap-detail">${g.detail}</div>
+        <div class="gap-sentence">${sentence}</div>
       `;
       list.appendChild(card);
     });
