@@ -28,9 +28,7 @@
       --radius-sm: 8px;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Roboto, sans-serif;
@@ -49,9 +47,7 @@
     }
 
     /* ── Screens ── */
-    .screen {
-      display: none;
-    }
+    .screen { display: none; }
 
     .screen.active {
       display: block;
@@ -63,10 +59,10 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── Brand header ── */
+    /* ── Brand ── */
     .brand {
       padding: 32px 0 0;
-      margin-bottom: 36px;
+      margin-bottom: 32px;
     }
 
     .brand-wordmark {
@@ -77,7 +73,30 @@
       color: var(--accent);
     }
 
-    /* ── Welcome ── */
+    /* ── Intro screen ── */
+    .intro-title {
+      font-size: clamp(26px, 6vw, 36px);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .intro-story {
+      font-size: 16px;
+      line-height: 1.85;
+      color: var(--text);
+      margin-bottom: 28px;
+    }
+
+    .intro-transition {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 28px;
+    }
+
+    /* ── Welcome screen ── */
     .welcome-title {
       font-size: clamp(28px, 7vw, 40px);
       font-weight: 800;
@@ -131,24 +150,9 @@
       background: var(--accent-light);
     }
 
-    .ctx-icon {
-      font-size: 22px;
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-
-    .ctx-label {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 3px;
-    }
-
-    .ctx-sub {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.4;
-    }
+    .ctx-icon { font-size: 22px; line-height: 1; margin-bottom: 8px; }
+    .ctx-label { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .ctx-sub { font-size: 12px; color: var(--muted); line-height: 1.4; }
 
     /* ── Buttons ── */
     .btn {
@@ -174,10 +178,7 @@
       box-shadow: 0 4px 14px rgba(32, 87, 212, 0.3);
     }
 
-    .btn-primary:disabled {
-      opacity: 0.35;
-      cursor: not-allowed;
-    }
+    .btn-primary:disabled { opacity: 0.35; cursor: not-allowed; }
 
     .btn-ghost {
       background: transparent;
@@ -187,10 +188,7 @@
       border: 2px solid var(--border);
     }
 
-    .btn-ghost:hover {
-      border-color: #aaa;
-      color: var(--text);
-    }
+    .btn-ghost:hover { border-color: #aaa; color: var(--text); }
 
     .btn-block {
       display: block;
@@ -202,10 +200,7 @@
     }
 
     /* ── Progress ── */
-    .progress-wrap {
-      padding: 28px 0 0;
-      margin-bottom: 32px;
-    }
+    .progress-wrap { padding: 28px 0 0; margin-bottom: 32px; }
 
     .progress-meta {
       display: flex;
@@ -214,22 +209,9 @@
       margin-bottom: 10px;
     }
 
-    .progress-step {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--muted);
-      letter-spacing: 0.04em;
-    }
+    .progress-step { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 0.04em; }
 
-    .progress-count {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .progress-bar {
-      display: flex;
-      gap: 5px;
-    }
+    .progress-bar { display: flex; gap: 5px; }
 
     .progress-seg {
       height: 3px;
@@ -239,9 +221,7 @@
       transition: background 0.35s;
     }
 
-    .progress-seg.done {
-      background: var(--accent);
-    }
+    .progress-seg.done { background: var(--accent); }
 
     /* ── Question ── */
     .q-label {
@@ -289,32 +269,15 @@
       box-shadow: 0 0 0 3px rgba(32, 87, 212, 0.1);
     }
 
-    textarea::placeholder {
-      color: #BBBBBE;
-    }
+    textarea::placeholder { color: #BBBBBE; }
 
-    .btn-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .btn-row .btn-primary {
-      flex: 1;
-    }
+    .btn-row { display: flex; gap: 10px; margin-top: 18px; }
+    .btn-row .btn-primary { flex: 1; }
 
     /* ── Analyzing ── */
-    .analyzing-wrap {
-      text-align: center;
-      padding: 110px 0 80px;
-    }
+    .analyzing-wrap { text-align: center; padding: 110px 0 80px; }
 
-    .pulse-ring {
-      display: flex;
-      justify-content: center;
-      gap: 9px;
-      margin-bottom: 30px;
-    }
+    .pulse-ring { display: flex; justify-content: center; gap: 9px; margin-bottom: 30px; }
 
     .pulse-dot {
       width: 11px;
@@ -332,22 +295,11 @@
       40%            { opacity: 1;    transform: scale(1); }
     }
 
-    .analyzing-headline {
-      font-size: 19px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .analyzing-sub {
-      font-size: 14px;
-      color: var(--muted);
-    }
+    .analyzing-headline { font-size: 19px; font-weight: 700; margin-bottom: 8px; }
+    .analyzing-sub { font-size: 14px; color: var(--muted); }
 
     /* ── Results ── */
-    .results-brand {
-      padding: 32px 0 0;
-      margin-bottom: 24px;
-    }
+    .results-brand { padding: 32px 0 0; margin-bottom: 24px; }
 
     .results-eyebrow {
       font-size: 11px;
@@ -375,43 +327,24 @@
       margin-top: 4px;
     }
 
-    /* ── Gap cards ── */
-    .gaps {
-      display: flex;
-      flex-direction: column;
-      gap: 11px;
-      margin: 28px 0 14px;
-    }
-
-    .gap-card {
+    /* ── Reveal block ── */
+    .reveal-block {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 22px 20px;
+      padding: 26px 22px;
+      font-size: 15px;
+      line-height: 1.85;
+      color: var(--text);
+      margin: 28px 0 14px;
       opacity: 0;
       transform: translateY(18px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      transition: opacity 0.55s ease, transform 0.55s ease;
     }
 
-    .gap-card.visible {
+    .reveal-block.visible {
       opacity: 1;
       transform: translateY(0);
-    }
-
-    .gap-num {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 7px;
-    }
-
-    .gap-sentence {
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 1.65;
-      color: var(--text);
     }
 
     /* ── CTA ── */
@@ -426,10 +359,7 @@
       transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
-    .cta-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .cta-card.visible { opacity: 1; transform: translateY(0); }
 
     .cta-title {
       font-size: 19px;
@@ -460,15 +390,9 @@
       transition: background 0.18s, transform 0.15s;
     }
 
-    .btn-cta:hover {
-      background: #f0f0f0;
-      transform: translateY(-1px);
-    }
+    .btn-cta:hover { background: #f0f0f0; transform: translateY(-1px); }
 
-    .restart-wrap {
-      text-align: center;
-      padding: 22px 0 4px;
-    }
+    .restart-wrap { text-align: center; padding: 22px 0 4px; }
 
     .btn-restart {
       background: none;
@@ -481,33 +405,37 @@
       text-underline-offset: 3px;
     }
 
-    .btn-restart:hover {
-      color: var(--text);
-    }
+    .btn-restart:hover { color: var(--text); }
 
-    /* ── Mobile ── */
     @media (max-width: 380px) {
-      .context-grid {
-        grid-template-columns: 1fr;
-      }
+      .context-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 <div id="app">
 
-  <!-- ═══ WELCOME ═══ -->
-  <div class="screen active" id="screen-welcome">
+  <!-- ═══ INTRO ═══ -->
+  <div class="screen active" id="screen-intro">
     <div class="brand">
       <div class="brand-wordmark">Stipum</div>
     </div>
+    <h1 class="intro-title">Before you take the quiz.</h1>
+    <p class="intro-story">Marco has been doing firestopping work for eighteen years. He has worked with the same GC on four jobs in the past three years. They trust each other. The handshake happens fast. On the fifth job the GC says same as last time. Marco says no problem. Six weeks in the backcharges start arriving. The GC assumed substrate prep was in Marco's price. Marco assumed the GC's crew was handling it. Neither said so because they had worked together before and both assumed the other knew. The dispute ran four months. The number was $34,000. A fifteen-minute declaration before the job started would have shown the gap on day one.</p>
+    <p class="intro-transition">Sound familiar? Answer five questions about your last engagement.</p>
+    <button class="btn btn-primary btn-block" onclick="showScreen('screen-welcome')">Start the quiz →</button>
+  </div>
 
+  <!-- ═══ WELCOME ═══ -->
+  <div class="screen" id="screen-welcome">
+    <div class="brand">
+      <div class="brand-wordmark">Stipum</div>
+    </div>
     <h1 class="welcome-title">The Assumption<br>Gap Quiz</h1>
     <p class="welcome-body">
       Five questions about your last bilateral commitment — a job, a consulting engagement, an insurance claim, or any professional agreement where two parties worked together.<br><br>
       When you finish, you'll see the gaps your counterparty almost certainly carried.
     </p>
-
     <div class="context-heading">What kind of engagement?</div>
     <div class="context-grid">
       <button class="ctx-btn" data-ctx="construction" onclick="selectCtx(this)">
@@ -531,7 +459,6 @@
         <div class="ctx-sub">Professional agreement</div>
       </button>
     </div>
-
     <button class="btn btn-primary btn-block" id="btn-start" onclick="startQuiz()" disabled>
       Start the quiz →
     </button>
@@ -543,7 +470,7 @@
       <div class="progress-meta">
         <span class="progress-step" id="prog-step">Question 1 of 5</span>
       </div>
-      <div class="progress-bar" id="prog-bar">
+      <div class="progress-bar">
         <div class="progress-seg done"></div>
         <div class="progress-seg"></div>
         <div class="progress-seg"></div>
@@ -551,12 +478,10 @@
         <div class="progress-seg"></div>
       </div>
     </div>
-
     <div class="q-label" id="q-label">Question 1</div>
     <h2 class="q-text" id="q-text"></h2>
     <p class="q-hint" id="q-hint"></p>
-    <textarea id="q-answer" oninput="checkAnswer()" placeholder="Write as much or as little as you like…"></textarea>
-
+    <textarea id="q-answer" oninput="checkAnswer()"></textarea>
     <div class="btn-row">
       <button class="btn btn-ghost" id="btn-back" onclick="goBack()" style="display:none;">← Back</button>
       <button class="btn btn-primary" id="btn-next" onclick="goNext()" disabled>
@@ -587,7 +512,7 @@
     <h2 class="results-title">Here's what your counterparty likely saw differently.</h2>
     <p class="results-framing">This quiz shows what a typical counterparty carries. A real Stipum filing captures what yours actually assumed — independently, before either party can see the other's answers.</p>
 
-    <div class="gaps" id="gaps-list"></div>
+    <div class="reveal-block" id="reveal-block"></div>
 
     <div class="cta-card" id="cta-card">
       <div class="cta-title">Close the gap before it opens.</div>
@@ -606,65 +531,84 @@
 
 </div>
 <script>
-  /* ── Data ── */
+  /* ── Questions (text only — hints and placeholders come from context) ── */
   const QUESTIONS = [
-    {
-      text: "What did your side include in this commitment?",
-      hint: "Think about what you understood yourself to be providing, doing, or delivering — what was on your side of the table.",
-      placeholder: "e.g. I agreed to handle the full kitchen renovation, including demo, rough-in, and all finish work…"
-    },
-    {
-      text: "What conditions were you counting on?",
-      hint: "What assumptions did you carry into this engagement — about access, timing, other people's actions, or the environment you'd be working in?",
-      placeholder: "e.g. I assumed site access Monday through Saturday, and that the prior contractor's rough-in was code-compliant…"
-    },
-    {
-      text: "Who was responsible for what?",
-      hint: "How did you understand the division of tasks, coordination, and decision-making between you and the other party?",
-      placeholder: "e.g. I thought they were handling permits and inspections — my role was only the physical work…"
-    },
-    {
-      text: "What did successful completion look like to you?",
-      hint: "What did you picture when you imagined this engagement being finished? What would make it fully done in your eyes?",
-      placeholder: "e.g. Done meant the client walked through, signed off on the punch list, and made final payment…"
-    },
-    {
-      text: "What were you most uncertain about?",
-      hint: "What did you privately worry about or feel unsure of going in — things you may not have said out loud to the other side?",
-      placeholder: "e.g. I wasn't sure how they'd handle scope changes, or whether they understood how long things actually take…"
-    }
+    "What did your side include in this commitment?",
+    "What conditions were you counting on?",
+    "Who was responsible for what?",
+    "What did successful completion look like to you?",
+    "What were you most uncertain about?"
   ];
 
+  /* ── Context data ── */
   const CONTEXTS = {
     construction: {
-      gaps: [
-        "The GC assumed substrate prep was in the sub's price.",
-        "The sub assumed the GC was handling access and sequencing.",
-        "Nobody said any of it out loud because everybody assumed everybody knew."
-      ]
+      hints: [
+        "Think about scope boundaries, what trades you assumed were yours, what you excluded without saying so, and what you priced that the other party may not have known was in your number.",
+        "Think about site access, substrate condition, sequencing, what other trades you assumed would be complete before you mobilized, and what the drawings showed versus what you expected to find.",
+        "Think about coordination, inspections, means and methods, cleanup, temporary protection, and anything where you assumed the other party was handling it.",
+        "Think about your acceptance criteria, what punch list items you expected, what the owner or GC would consider done, and whether your definition of complete matches the contract language.",
+        "Think about the things you priced with a contingency, the items you meant to clarify but did not, and the conditions you assumed would work out."
+      ],
+      placeholders: [
+        "e.g. My scope included all firestopping penetrations per drawings, labor and material, excluding substrate prep and access coordination.",
+        "e.g. I assumed site access by 7am, substrate ready, and drywall complete before I mobilized.",
+        "e.g. I assumed the GC was handling inspection scheduling and temporary protection.",
+        "e.g. Done means all penetrations sealed, tested, and signed off by the inspector.",
+        "e.g. I wasn't sure whether the mechanical drawings matched what was roughed in."
+      ],
+      reveal: "These gaps are not hypothetical. They are the assumptions your counterparty carried into your last job. Neither of you said them out loud. You have probably worked together before — which made both of you more certain, not less. The GC assumed substrate prep was in the sub's price. The sub assumed the GC was handling access and sequencing. The inspector assumed both parties had agreed on tolerance thresholds. Nobody said any of it out loud because everybody assumed everybody knew. A real Stipum declaration captures what each party actually assumed — independently, before either can see the other's answers. This quiz shows you what a typical counterparty carries. A real filing shows you what yours did. File before your next job starts."
     },
     consulting: {
-      gaps: [
-        "The client assumed revisions were unlimited.",
-        "The consultant assumed two rounds was industry standard.",
-        "The client assumed the consultant owned execution.",
-        "The consultant assumed they were advising only."
-      ]
+      hints: [
+        "Think about your deliverables, what you understood was in scope, what you assumed was excluded, and what the client believed they were buying.",
+        "Think about data the client would provide, access to stakeholders, approval authority, tools and systems you assumed were available, and timeline assumptions.",
+        "Think about who owns execution versus strategy, who has final sign-off, who manages third parties, and who handles revisions.",
+        "Think about your definition of done, how many revision rounds you assumed, what acceptance looked like, and whether the client's success criteria matched yours.",
+        "Think about scope items you were uncertain about, dependencies you could not control, and conversations you meant to have before starting."
+      ],
+      placeholders: [
+        "e.g. My scope included strategy, two rounds of revisions, and a final presentation deck.",
+        "e.g. I assumed the client would provide clean data and stakeholder access within the first two weeks.",
+        "e.g. I assumed the client owned execution and I was advising only.",
+        "e.g. Done means a delivered deck approved by the sponsor in writing.",
+        "e.g. I wasn't sure who had final sign-off on the recommendations."
+      ],
+      reveal: "These gaps are not hypothetical. They are the assumptions your client carried into your last engagement. You are both experts. That is exactly the problem. The client assumed revisions were unlimited because that is how their last agency worked. The consultant assumed two rounds was industry standard. The client assumed the consultant owned execution. The consultant assumed they were advising only. Nobody clarified because the kickoff felt so aligned. A real Stipum declaration captures what each party actually assumed before the engagement begins. This quiz shows you what a typical client carries. A real filing shows you what yours did. File before your next engagement starts."
     },
     insurance: {
-      gaps: [
-        "The adjuster assumed the contractor's scope included code upgrades.",
-        "The contractor assumed supplements would be approved before mobilization.",
-        "Nobody aligned on any of it before work began."
-      ]
+      hints: [
+        "Think about what your scope covered, what you excluded, what you assumed was a separate line item, and what the policy or authorization actually said versus what you understood.",
+        "Think about supplement approval timing, documentation standards, access to the property, material availability, and what the adjuster had authority to approve.",
+        "Think about who authorizes supplements, who manages the homeowner relationship, who handles code upgrades, and who has sign-off on scope changes.",
+        "Think about your completion standard, what the adjuster considered closed, what the homeowner expected, and whether your scope matched the estimate line by line.",
+        "Think about items you priced with uncertainty, approvals you needed but did not have, and conditions you had not seen before starting."
+      ],
+      placeholders: [
+        "e.g. My scope covered water damage remediation and drywall replacement per the estimate.",
+        "e.g. I assumed supplement approval before mobilization and access by Monday.",
+        "e.g. I assumed the adjuster had authority to approve code upgrades on site.",
+        "e.g. Done means all line items on the approved estimate completed and signed off.",
+        "e.g. I wasn't sure whether mold remediation was in scope or a separate authorization."
+      ],
+      reveal: "These gaps are not hypothetical. They are the assumptions your contractor or adjuster carried into your last claim. Both parties are experienced. Both parties were certain. The adjuster assumed the contractor's scope included code upgrades. The contractor assumed supplements would be approved before mobilization. The adjuster assumed the documentation standard was what they always use. The contractor assumed the timeline had flexibility for material lead times. Nobody aligned on any of it before work began. A real Stipum declaration captures what each party actually assumed before work authorization. This quiz shows you what a typical counterparty carries. A real filing shows you what yours did. File before your next claim starts."
     },
     other: {
-      gaps: [
-        "They assumed you owned the outcome.",
-        "You assumed you were responsible for the process.",
-        "They assumed the timeline had flexibility.",
-        "You assumed the deadline was fixed."
-      ]
+      hints: [
+        "Think about what you understood yourself to be delivering, what you excluded without saying so, and what the other party believed was included.",
+        "Think about resources, access, information, approvals, and timeline assumptions you were counting on from the other party.",
+        "Think about ownership of outcomes versus process, decision authority, and who manages dependencies.",
+        "Think about your definition of done and whether it matches the other party's expectations.",
+        "Think about the conversations you meant to have before starting and the items you were not sure about."
+      ],
+      placeholders: [
+        "e.g. My understanding was that I was delivering a complete marketing campaign including copy, design, and scheduling.",
+        "e.g. I assumed the client would provide brand assets and approvals within 48 hours of requests.",
+        "e.g. I assumed I owned execution and the client was reviewing and approving only.",
+        "e.g. Done means the campaign is live and the client has confirmed in writing.",
+        "e.g. I wasn't sure whether paid media management was in my scope or theirs."
+      ],
+      reveal: "These gaps are not hypothetical. They are the assumptions the other party carried into your last professional engagement. You are both good at what you do. That is exactly why the gaps stayed hidden. They assumed you owned the outcome. You assumed you were responsible for the process. They assumed the timeline had flexibility. You assumed the deadline was fixed. They assumed feedback meant approval. You assumed silence meant acceptance. A real Stipum declaration captures what each party actually assumed before the work begins. This quiz shows you what a typical counterparty carries. A real filing shows you what yours did. File before your next engagement starts."
     }
   };
 
@@ -690,14 +634,15 @@
 
   /* ── Questions ── */
   function renderQuestion() {
-    const q = QUESTIONS[step];
+    const ctxData = CONTEXTS[ctx];
+
     document.getElementById('q-label').textContent = `Question ${step + 1}`;
-    document.getElementById('q-text').textContent = q.text;
-    document.getElementById('q-hint').textContent = q.hint;
+    document.getElementById('q-text').textContent = QUESTIONS[step];
+    document.getElementById('q-hint').textContent = ctxData.hints[step];
 
     const ta = document.getElementById('q-answer');
     ta.value = answers[step];
-    ta.placeholder = q.placeholder;
+    ta.placeholder = ctxData.placeholders[step];
     ta.focus();
 
     document.getElementById('prog-step').textContent = `Question ${step + 1} of 5`;
@@ -747,29 +692,15 @@
   function showResults() {
     const data = CONTEXTS[ctx];
 
-    const list = document.getElementById('gaps-list');
-    list.innerHTML = '';
-    data.gaps.forEach((sentence, i) => {
-      const card = document.createElement('div');
-      card.className = 'gap-card';
-      card.innerHTML = `
-        <div class="gap-num">Gap ${i + 1}</div>
-        <div class="gap-sentence">${sentence}</div>
-      `;
-      list.appendChild(card);
-    });
+    const revealBlock = document.getElementById('reveal-block');
+    revealBlock.textContent = data.reveal;
+    revealBlock.classList.remove('visible');
 
     document.getElementById('cta-card').classList.remove('visible');
     showScreen('screen-results');
 
-    // Staggered card reveal
-    const cards = document.querySelectorAll('.gap-card');
-    cards.forEach((card, i) => {
-      setTimeout(() => card.classList.add('visible'), 200 + i * 200);
-    });
-    setTimeout(() => {
-      document.getElementById('cta-card').classList.add('visible');
-    }, 200 + cards.length * 200 + 100);
+    setTimeout(() => revealBlock.classList.add('visible'), 200);
+    setTimeout(() => document.getElementById('cta-card').classList.add('visible'), 700);
   }
 
   /* ── Helpers ── */
