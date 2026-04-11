@@ -83,20 +83,33 @@
     }
 
     .intro-story {
-      font-size: 16px;
+      font-size: 15px;
       line-height: 1.85;
       color: var(--text);
       margin-bottom: 28px;
+    }
+
+    .intro-story p {
+      margin-bottom: 16px;
+    }
+
+    .intro-story p:last-child {
+      margin-bottom: 0;
+    }
+
+    .story-key {
+      font-weight: 700;
     }
 
     .intro-transition {
       font-size: 15px;
       font-weight: 600;
       color: var(--accent);
-      margin-bottom: 28px;
+      margin-bottom: 24px;
+      line-height: 1.5;
     }
 
-    /* ── Welcome screen ── */
+    /* ── Welcome ── */
     .welcome-title {
       font-size: clamp(28px, 7vw, 40px);
       font-weight: 800;
@@ -110,7 +123,6 @@
       line-height: 1.75;
       color: var(--muted);
       margin-bottom: 40px;
-      max-width: 480px;
     }
 
     .context-heading {
@@ -224,14 +236,7 @@
     .progress-seg.done { background: var(--accent); }
 
     /* ── Question ── */
-    .q-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 12px;
-    }
+    .q-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
 
     .q-text {
       font-size: clamp(21px, 5vw, 28px);
@@ -241,12 +246,7 @@
       margin-bottom: 10px;
     }
 
-    .q-hint {
-      font-size: 14px;
-      line-height: 1.7;
-      color: var(--muted);
-      margin-bottom: 22px;
-    }
+    .q-hint { font-size: 14px; line-height: 1.7; color: var(--muted); margin-bottom: 22px; }
 
     textarea {
       width: 100%;
@@ -280,9 +280,7 @@
     .pulse-ring { display: flex; justify-content: center; gap: 9px; margin-bottom: 30px; }
 
     .pulse-dot {
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
+      width: 11px; height: 11px; border-radius: 50%;
       background: var(--accent);
       animation: blink 1.3s ease-in-out infinite;
     }
@@ -302,29 +300,20 @@
     .results-brand { padding: 32px 0 0; margin-bottom: 24px; }
 
     .results-eyebrow {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 12px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
     }
 
     .results-title {
       font-size: clamp(23px, 5.5vw, 32px);
-      font-weight: 800;
-      line-height: 1.2;
-      letter-spacing: -0.015em;
-      margin-bottom: 12px;
+      font-weight: 800; line-height: 1.2;
+      letter-spacing: -0.015em; margin-bottom: 16px;
     }
 
     .results-framing {
-      font-size: 14px;
-      line-height: 1.75;
-      color: var(--muted);
+      font-size: 14px; line-height: 1.75; color: var(--muted);
       border-left: 3px solid var(--border);
-      padding-left: 14px;
-      margin-top: 4px;
+      padding-left: 14px; margin-bottom: 24px;
     }
 
     /* ── Reveal block ── */
@@ -332,20 +321,17 @@
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 26px 22px;
+      padding: 24px 22px;
       font-size: 15px;
       line-height: 1.85;
       color: var(--text);
-      margin: 28px 0 14px;
       opacity: 0;
       transform: translateY(18px);
-      transition: opacity 0.55s ease, transform 0.55s ease;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      margin-bottom: 14px;
     }
 
-    .reveal-block.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal-block.visible { opacity: 1; transform: translateY(0); }
 
     /* ── CTA ── */
     .cta-card {
@@ -353,7 +339,7 @@
       border-radius: var(--radius);
       padding: 30px 24px;
       text-align: center;
-      margin-top: 16px;
+      margin-top: 4px;
       opacity: 0;
       transform: translateY(18px);
       transition: opacity 0.5s ease, transform 0.5s ease;
@@ -361,32 +347,15 @@
 
     .cta-card.visible { opacity: 1; transform: translateY(0); }
 
-    .cta-title {
-      font-size: 19px;
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: -0.01em;
-      margin-bottom: 10px;
-      line-height: 1.3;
-    }
+    .cta-title { font-size: 19px; font-weight: 800; color: #fff; letter-spacing: -0.01em; margin-bottom: 10px; line-height: 1.3; }
 
-    .cta-body {
-      font-size: 14px;
-      color: rgba(255,255,255,0.65);
-      line-height: 1.7;
-      margin-bottom: 22px;
-    }
+    .cta-body { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 22px; }
 
     .btn-cta {
-      display: block;
-      background: #fff;
-      color: var(--text);
-      text-decoration: none;
-      font-family: inherit;
-      font-size: 15px;
-      font-weight: 700;
-      padding: 16px 24px;
-      border-radius: var(--radius-sm);
+      display: block; background: #fff; color: var(--text);
+      text-decoration: none; font-family: inherit;
+      font-size: 15px; font-weight: 700;
+      padding: 16px 24px; border-radius: var(--radius-sm);
       transition: background 0.18s, transform 0.15s;
     }
 
@@ -395,14 +364,9 @@
     .restart-wrap { text-align: center; padding: 22px 0 4px; }
 
     .btn-restart {
-      background: none;
-      border: none;
-      font-family: inherit;
-      font-size: 14px;
-      color: var(--muted);
-      cursor: pointer;
-      text-decoration: underline;
-      text-underline-offset: 3px;
+      background: none; border: none; font-family: inherit;
+      font-size: 14px; color: var(--muted); cursor: pointer;
+      text-decoration: underline; text-underline-offset: 3px;
     }
 
     .btn-restart:hover { color: var(--text); }
@@ -420,10 +384,25 @@
     <div class="brand">
       <div class="brand-wordmark">Stipum</div>
     </div>
+
     <h1 class="intro-title">Before you take the quiz.</h1>
-    <p class="intro-story">Marco has been doing firestopping work for eighteen years. He has worked with the same GC on four jobs in the past three years. They trust each other. The handshake happens fast. On the fifth job the GC says same as last time. Marco says no problem. Six weeks in the backcharges start arriving. The GC assumed substrate prep was in Marco's price. Marco assumed the GC's crew was handling it. Neither said so because they had worked together before and both assumed the other knew. The dispute ran four months. The number was $34,000. A fifteen-minute declaration before the job started would have shown the gap on day one.</p>
+
+    <div class="intro-story">
+      <p>Marco is a licensed firestopping contractor with eighteen years in commercial construction. Dave is a mid-size GC with thirty years in the field. On the fifth job together they went through the normal process — drawings, approved submittal, signed subcontract, preconstruction meeting. Everything a professional engagement requires.</p>
+      <p>The contract said <span class="story-key">firestopping penetrations per drawings, labor and material</span>. Both parties signed it. The drawings showed every penetration location. The specs referenced the UL listings. The paperwork was complete.</p>
+      <p><span class="story-key">Six weeks in the backcharges start arriving.</span></p>
+      <p>The contract did not say who was responsible for substrate prep. Neither did the drawings. Neither party raised it at the preconstruction meeting because both assumed the other knew. Dave assumed it was in Marco's price because it was on the last job. Marco assumed Dave's crew was handling it because that is how it worked on the job before that.</p>
+      <p>The paperwork captured what they agreed to. It did not capture what each party assumed.</p>
+      <p>The dispute ran four months. The relationship survived but barely. <span class="story-key">The number in question was $34,000.</span></p>
+      <p>A Stipum declaration at award would have taken fifteen minutes. Both parties answer five questions independently. Neither sees the other's answers until both have submitted. The comparison would have shown the substrate prep gap on day one — before a single hour of work was logged.</p>
+      <p>The paperwork was not the problem. The paperwork was complete. The assumption gap lived in the space the paperwork never reaches.</p>
+    </div>
+
     <p class="intro-transition">Sound familiar? Answer five questions about your last engagement.</p>
-    <button class="btn btn-primary btn-block" onclick="showScreen('screen-welcome')">Start the quiz →</button>
+
+    <button class="btn btn-primary btn-block" onclick="showScreen('screen-welcome')">
+      Start the quiz →
+    </button>
   </div>
 
   <!-- ═══ WELCOME ═══ -->
@@ -431,11 +410,13 @@
     <div class="brand">
       <div class="brand-wordmark">Stipum</div>
     </div>
+
     <h1 class="welcome-title">The Assumption<br>Gap Quiz</h1>
     <p class="welcome-body">
       Five questions about your last bilateral commitment — a job, a consulting engagement, an insurance claim, or any professional agreement where two parties worked together.<br><br>
       When you finish, you'll see the gaps your counterparty almost certainly carried.
     </p>
+
     <div class="context-heading">What kind of engagement?</div>
     <div class="context-grid">
       <button class="ctx-btn" data-ctx="construction" onclick="selectCtx(this)">
@@ -459,6 +440,7 @@
         <div class="ctx-sub">Professional agreement</div>
       </button>
     </div>
+
     <button class="btn btn-primary btn-block" id="btn-start" onclick="startQuiz()" disabled>
       Start the quiz →
     </button>
@@ -478,10 +460,12 @@
         <div class="progress-seg"></div>
       </div>
     </div>
+
     <div class="q-label" id="q-label">Question 1</div>
     <h2 class="q-text" id="q-text"></h2>
     <p class="q-hint" id="q-hint"></p>
     <textarea id="q-answer" oninput="checkAnswer()"></textarea>
+
     <div class="btn-row">
       <button class="btn btn-ghost" id="btn-back" onclick="goBack()" style="display:none;">← Back</button>
       <button class="btn btn-primary" id="btn-next" onclick="goNext()" disabled>
@@ -512,7 +496,7 @@
     <h2 class="results-title">Here's what your counterparty likely saw differently.</h2>
     <p class="results-framing">This quiz shows what a typical counterparty carries. A real Stipum filing captures what yours actually assumed — independently, before either party can see the other's answers.</p>
 
-    <div class="reveal-block" id="reveal-block"></div>
+    <div id="reveal-container"></div>
 
     <div class="cta-card" id="cta-card">
       <div class="cta-title">Close the gap before it opens.</div>
@@ -531,7 +515,6 @@
 
 </div>
 <script>
-  /* ── Questions (text only — hints and placeholders come from context) ── */
   const QUESTIONS = [
     "What did your side include in this commitment?",
     "What conditions were you counting on?",
@@ -540,7 +523,6 @@
     "What were you most uncertain about?"
   ];
 
-  /* ── Context data ── */
   const CONTEXTS = {
     construction: {
       hints: [
@@ -557,7 +539,7 @@
         "e.g. Done means all penetrations sealed, tested, and signed off by the inspector.",
         "e.g. I wasn't sure whether the mechanical drawings matched what was roughed in."
       ],
-      reveal: "These gaps are not hypothetical. They are the assumptions your counterparty carried into your last job. Neither of you said them out loud. You have probably worked together before — which made both of you more certain, not less. The GC assumed substrate prep was in the sub's price. The sub assumed the GC was handling access and sequencing. The inspector assumed both parties had agreed on tolerance thresholds. Nobody said any of it out loud because everybody assumed everybody knew. A real Stipum declaration captures what each party actually assumed — independently, before either can see the other's answers. This quiz shows you what a typical counterparty carries. A real filing shows you what yours did. File before your next job starts."
+      reveal: "These gaps are not hypothetical. They are the assumptions your counterparty carried into your last job. Neither of you said them out loud. You have probably worked together before — which made both of you more certain, not less.\n\nThe GC assumed substrate prep was in the sub's price. The sub assumed the GC was handling access and sequencing. The inspector assumed both parties had agreed on tolerance thresholds. Nobody said any of it out loud because everybody assumed everybody knew.\n\nA real Stipum declaration captures what each party actually assumed — independently, before either can see the other's answers. This quiz shows you what a typical counterparty carries. A real filing shows you what yours did. File before your next job starts."
     },
     consulting: {
       hints: [
@@ -574,7 +556,7 @@
         "e.g. Done means a delivered deck approved by the sponsor in writing.",
         "e.g. I wasn't sure who had final sign-off on the recommendations."
       ],
-      reveal: "These gaps are not hypothetical. They are the assumptions your client carried into your last engagement. You are both experts. That is exactly the problem. The client assumed revisions were unlimited because that is how their last agency worked. The consultant assumed two rounds was industry standard. The client assumed the consultant owned execution. The consultant assumed they were advising only. Nobody clarified because the kickoff felt so aligned. A real Stipum declaration captures what each party actually assumed before the engagement begins. This quiz shows you what a typical client carries. A real filing shows you what yours did. File before your next engagement starts."
+      reveal: "These gaps are not hypothetical. They are the assumptions your client carried into your last engagement. You are both experts. That is exactly the problem.\n\nThe client assumed revisions were unlimited because that is how their last agency worked. The consultant assumed two rounds was industry standard. The client assumed the consultant owned execution. The consultant assumed they were advising only. Nobody clarified because the kickoff felt so aligned.\n\nA real Stipum declaration captures what each party actually assumed before the engagement begins. This quiz shows you what a typical client carries. A real filing shows you what yours did. File before your next engagement starts."
     },
     insurance: {
       hints: [
@@ -591,7 +573,7 @@
         "e.g. Done means all line items on the approved estimate completed and signed off.",
         "e.g. I wasn't sure whether mold remediation was in scope or a separate authorization."
       ],
-      reveal: "These gaps are not hypothetical. They are the assumptions your contractor or adjuster carried into your last claim. Both parties are experienced. Both parties were certain. The adjuster assumed the contractor's scope included code upgrades. The contractor assumed supplements would be approved before mobilization. The adjuster assumed the documentation standard was what they always use. The contractor assumed the timeline had flexibility for material lead times. Nobody aligned on any of it before work began. A real Stipum declaration captures what each party actually assumed before work authorization. This quiz shows you what a typical counterparty carries. A real filing shows you what yours did. File before your next claim starts."
+      reveal: "These gaps are not hypothetical. They are the assumptions your contractor or adjuster carried into your last claim. Both parties are experienced. Both parties were certain.\n\nThe adjuster assumed the contractor's scope included code upgrades. The contractor assumed supplements would be approved before mobilization. The adjuster assumed the documentation standard was what they always use. The contractor assumed the timeline had flexibility for material lead times. Nobody aligned on any of it before work began.\n\nA real Stipum declaration captures what each party actually assumed before work authorization. This quiz shows you what a typical counterparty carries. A real filing shows you what yours did. File before your next claim starts."
     },
     other: {
       hints: [
@@ -608,16 +590,14 @@
         "e.g. Done means the campaign is live and the client has confirmed in writing.",
         "e.g. I wasn't sure whether paid media management was in my scope or theirs."
       ],
-      reveal: "These gaps are not hypothetical. They are the assumptions the other party carried into your last professional engagement. You are both good at what you do. That is exactly why the gaps stayed hidden. They assumed you owned the outcome. You assumed you were responsible for the process. They assumed the timeline had flexibility. You assumed the deadline was fixed. They assumed feedback meant approval. You assumed silence meant acceptance. A real Stipum declaration captures what each party actually assumed before the work begins. This quiz shows you what a typical counterparty carries. A real filing shows you what yours did. File before your next engagement starts."
+      reveal: "These gaps are not hypothetical. They are the assumptions the other party carried into your last professional engagement. You are both good at what you do. That is exactly why the gaps stayed hidden.\n\nThey assumed you owned the outcome. You assumed you were responsible for the process. They assumed the timeline had flexibility. You assumed the deadline was fixed. They assumed feedback meant approval. You assumed silence meant acceptance.\n\nA real Stipum declaration captures what each party actually assumed before the work begins. This quiz shows you what a typical counterparty carries. A real filing shows you what yours did. File before your next engagement starts."
     }
   };
 
-  /* ── State ── */
   let ctx = null;
   let step = 0;
   let answers = [];
 
-  /* ── Welcome ── */
   function selectCtx(btn) {
     document.querySelectorAll('.ctx-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
@@ -632,10 +612,8 @@
     renderQuestion();
   }
 
-  /* ── Questions ── */
   function renderQuestion() {
     const ctxData = CONTEXTS[ctx];
-
     document.getElementById('q-label').textContent = `Question ${step + 1}`;
     document.getElementById('q-text').textContent = QUESTIONS[step];
     document.getElementById('q-hint').textContent = ctxData.hints[step];
@@ -682,28 +660,34 @@
     renderQuestion();
   }
 
-  /* ── Analyzing ── */
   function runAnalysis() {
     showScreen('screen-analyzing');
     setTimeout(showResults, 2600);
   }
 
-  /* ── Results ── */
   function showResults() {
     const data = CONTEXTS[ctx];
+    const container = document.getElementById('reveal-container');
+    container.innerHTML = '';
 
-    const revealBlock = document.getElementById('reveal-block');
-    revealBlock.textContent = data.reveal;
-    revealBlock.classList.remove('visible');
+    const block = document.createElement('div');
+    block.className = 'reveal-block';
 
+    data.reveal.split('\n\n').forEach((para, i, arr) => {
+      const p = document.createElement('p');
+      p.textContent = para;
+      if (i < arr.length - 1) p.style.marginBottom = '16px';
+      block.appendChild(p);
+    });
+
+    container.appendChild(block);
     document.getElementById('cta-card').classList.remove('visible');
     showScreen('screen-results');
 
-    setTimeout(() => revealBlock.classList.add('visible'), 200);
-    setTimeout(() => document.getElementById('cta-card').classList.add('visible'), 700);
+    setTimeout(() => block.classList.add('visible'), 200);
+    setTimeout(() => document.getElementById('cta-card').classList.add('visible'), 800);
   }
 
-  /* ── Helpers ── */
   function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
