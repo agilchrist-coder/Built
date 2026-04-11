@@ -371,6 +371,71 @@
 
     .btn-restart:hover { color: var(--text); }
 
+    /* ── Case study screen ── */
+    .cs-story { font-size: 15px; line-height: 1.85; color: var(--text); margin-bottom: 28px; }
+    .cs-story p { margin-bottom: 14px; }
+    .cs-story p:last-child { margin-bottom: 0; }
+    .cs-transition { font-size: 15px; font-weight: 600; color: var(--accent); margin-bottom: 24px; line-height: 1.5; }
+
+    /* ── Comparison columns ── */
+    .comp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .comp-col {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .comp-col.visible { opacity: 1; transform: translateY(0); }
+    .comp-party { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+    .comp-items { list-style: none; padding: 0; margin: 0; }
+    .comp-item { font-size: 13px; line-height: 1.6; color: var(--text); padding: 7px 0; border-bottom: 1px solid var(--border); }
+    .comp-item:last-child { border-bottom: none; }
+
+    /* ── Gap highlight ── */
+    .gap-box {
+      background: #FFFBEB;
+      border: 1px solid #F59E0B;
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      margin-top: 10px;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .gap-box.visible { opacity: 1; transform: translateY(0); }
+    .gap-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #B45309; margin-bottom: 6px; }
+    .gap-title { font-size: 15px; font-weight: 700; color: #92400E; margin-bottom: 4px; }
+    .gap-detail { font-size: 13px; color: #B45309; line-height: 1.6; }
+
+    /* ── User comparison ── */
+    .user-compare {
+      margin-top: 28px;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .user-compare.visible { opacity: 1; transform: translateY(0); }
+    .user-compare-heading { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+    .user-q-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 10px; }
+    .user-q-text { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 12px; }
+    .user-q-badge { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+    .badge-you { color: var(--accent); }
+    .badge-them { color: var(--muted); }
+    .user-q-yours { font-size: 13px; line-height: 1.6; padding: 10px 12px; border-radius: 6px; margin-bottom: 10px; background: var(--accent-light); color: var(--text); }
+    .user-q-theirs { font-size: 13px; line-height: 1.6; padding: 10px 12px; border-radius: 6px; background: #F3F4F6; color: var(--muted); }
+
+    @media (max-width: 480px) {
+      .comp-grid { grid-template-columns: 1fr; }
+    }
+
     @media (max-width: 380px) {
       .context-grid { grid-template-columns: 1fr; }
     }
@@ -379,34 +444,17 @@
 <body>
 <div id="app">
 
-  <!-- ═══ INTRO ═══ -->
-  <div class="screen active" id="screen-intro">
-    <div class="brand">
-      <div class="brand-wordmark">Stipum</div>
-    </div>
-
-    <h1 class="intro-title">Before you take the quiz.</h1>
-
-    <div class="intro-story">
-      <p>Marco is a licensed firestopping contractor with eighteen years in commercial construction. Dave is a mid-size GC with thirty years in the field. On the fifth job together they went through the normal process — drawings, approved submittal, signed subcontract, preconstruction meeting. Everything a professional engagement requires.</p>
-      <p>The contract said <span class="story-key">firestopping penetrations per drawings, labor and material</span>. Both parties signed it. The drawings showed every penetration location. The specs referenced the UL listings. The paperwork was complete.</p>
-      <p><span class="story-key">Six weeks in the backcharges start arriving.</span></p>
-      <p>The contract did not say who was responsible for substrate prep. Neither did the drawings. Neither party raised it at the preconstruction meeting because both assumed the other knew. Dave assumed it was in Marco's price because it was on the last job. Marco assumed Dave's crew was handling it because that is how it worked on the job before that.</p>
-      <p>The paperwork captured what they agreed to. It did not capture what each party assumed.</p>
-      <p>The dispute ran four months. The relationship survived but barely. <span class="story-key">The number in question was $34,000.</span></p>
-      <p>A Stipum declaration at award would have taken fifteen minutes. Both parties answer five questions independently. Neither sees the other's answers until both have submitted. The comparison would have shown the substrate prep gap on day one — before a single hour of work was logged.</p>
-      <p>The paperwork was not the problem. The paperwork was complete. The assumption gap lived in the space the paperwork never reaches.</p>
-    </div>
-
-    <p class="intro-transition">Sound familiar? Answer five questions about your last engagement.</p>
-
-    <button class="btn btn-primary btn-block" onclick="showScreen('screen-welcome')">
-      Start the quiz →
-    </button>
+  <!-- ═══ CASE STUDY (populated dynamically per vertical) ═══ -->
+  <div class="screen" id="screen-casestudy">
+    <div class="brand"><div class="brand-wordmark">Stipum</div></div>
+    <h1 class="intro-title">Before you take the questions.</h1>
+    <div class="cs-story" id="cs-story"></div>
+    <p class="cs-transition">Sound familiar? Answer five questions about your last engagement.</p>
+    <button class="btn btn-primary btn-block" onclick="startQuiz()">Start the questions →</button>
   </div>
 
   <!-- ═══ WELCOME ═══ -->
-  <div class="screen" id="screen-welcome">
+  <div class="screen active" id="screen-welcome">
     <div class="brand">
       <div class="brand-wordmark">Stipum</div>
     </div>
@@ -441,7 +489,7 @@
       </button>
     </div>
 
-    <button class="btn btn-primary btn-block" id="btn-start" onclick="startQuiz()" disabled>
+    <button class="btn btn-primary btn-block" id="btn-start" onclick="showCaseStudy()" disabled>
       Start the quiz →
     </button>
   </div>
@@ -493,10 +541,11 @@
       <div class="brand-wordmark">Stipum</div>
     </div>
     <div class="results-eyebrow">Your Assumption Gaps</div>
-    <h2 class="results-title">Here's what your counterparty likely saw differently.</h2>
-    <p class="results-framing">This quiz shows what a typical counterparty carries. A real Stipum filing captures what yours actually assumed — independently, before either party can see the other's answers.</p>
+    <h2 class="results-title">Here's what a Stipum filing would have shown.</h2>
+    <p class="results-framing">This is the gap a real Stipum filing would have surfaced — before work began, before the dispute started, when fixing it cost nothing.</p>
 
-    <div id="reveal-container"></div>
+    <div id="comp-grid-container"></div>
+    <div id="user-compare-container"></div>
 
     <div class="cta-card" id="cta-card">
       <div class="cta-title">Close the gap before it opens.</div>
@@ -525,6 +574,31 @@
 
   const CONTEXTS = {
     construction: {
+      casestudy: [
+        "Marco is a licensed firestopping contractor with eighteen years in commercial construction. Dave is a mid-size GC with thirty years in the field. On the fifth job together they went through the normal process — drawings, approved submittal, signed subcontract, preconstruction meeting. Everything a professional engagement requires.",
+        "The contract said <strong>firestopping penetrations per drawings, labor and material</strong>. Both parties signed it. The drawings showed every penetration location. The specs referenced the UL listings. The paperwork was complete.",
+        "<strong>Six weeks in the backcharges start arriving.</strong>",
+        "The contract did not say who was responsible for substrate prep. Neither did the drawings. Neither party raised it at the preconstruction meeting because both assumed the other knew. Dave assumed it was in Marco's price because it was on the last job. Marco assumed Dave's crew was handling it because that is how it worked on the job before that.",
+        "The paperwork captured what they agreed to. It did not capture what each party assumed.",
+        "The dispute ran four months. The relationship survived but barely. <strong>The number in question was $34,000.</strong>",
+        "A Stipum declaration at award would have taken fifteen minutes. Both parties answer five questions independently. Neither sees the other's answers until both have submitted. The comparison would have shown the substrate prep gap on day one — before a single hour of work was logged.",
+        "The paperwork was not the problem. The paperwork was complete. The assumption gap lived in the space the paperwork never reaches."
+      ],
+      comparison: {
+        leftParty: "What Marco declared",
+        leftItems: ["My scope includes all firestopping penetrations per drawings, labor and material.", "I assumed site access and sequencing would be handled by the GC.", "I assumed substrate was ready when I mobilized."],
+        rightParty: "What Dave declared",
+        rightItems: ["Firestopping scope covers penetrations, labor and material.", "Substrate prep is included in the firestopping price as it was on the last job.", "Access and sequencing coordinated by sub."],
+        gapTitle: "Substrate prep",
+        gapDetail: "Each party assumed the other was responsible. Neither declared it."
+      },
+      typicalCounterparty: [
+        "Firestopping penetrations per drawings, labor and material. Sub responsible for all elements of their trade scope.",
+        "Sub mobilizes after drywall and MEP rough-in are complete. Site access during standard working hours.",
+        "GC coordinates overall sequencing and inspections. Sub is responsible for all prep within their trade scope.",
+        "All penetrations sealed, tested, and signed off. Substrate in trade-ready condition is sub's responsibility going in.",
+        "Whether the substrate condition on site matched what the sub had priced for."
+      ],
       hints: [
         "Think about scope boundaries, what trades you assumed were yours, what you excluded without saying so, and what you priced that the other party may not have known was in your number.",
         "Think about site access, substrate condition, sequencing, what other trades you assumed would be complete before you mobilized, and what the drawings showed versus what you expected to find.",
@@ -539,9 +613,33 @@
         "e.g. Done means all penetrations sealed, tested, and signed off by the inspector.",
         "e.g. I wasn't sure whether the mechanical drawings matched what was roughed in."
       ],
-      reveal: "These gaps are not hypothetical. They are the assumptions your counterparty carried into your last job. Neither of you said them out loud. You have probably worked together before — which made both of you more certain, not less.\n\nThe GC assumed substrate prep was in the sub's price. The sub assumed the GC was handling access and sequencing. The inspector assumed both parties had agreed on tolerance thresholds. Nobody said any of it out loud because everybody assumed everybody knew.\n\nA real Stipum declaration captures what each party actually assumed — independently, before either can see the other's answers. This quiz shows you what a typical counterparty carries. A real filing shows you what yours did. File before your next job starts."
     },
     consulting: {
+      casestudy: [
+        "Sarah is a strategy consultant with twelve years in management consulting. The client is the VP of Marketing at a mid-size SaaS company. They have worked together once before. The engagement is scoped at eight weeks.",
+        "The statement of work said <strong>strategic recommendations and supporting analysis, two rounds of revisions, final presentation deck</strong>. Both parties signed it. The kickoff call was two hours and felt like strong alignment.",
+        "<strong>Eight weeks in, the client asks for the implementation roadmap.</strong>",
+        "The SOW did not define the boundary between strategy and implementation. Neither party raised it at kickoff because both assumed the other understood. The client assumed strategy through to implementation roadmap was what they were buying. Sarah assumed she was advising only — two rounds of revisions, a final deck, done.",
+        "The SOW captured what they agreed to. It did not capture what each party assumed it meant.",
+        "The engagement ended in an invoice dispute and a relationship that did not continue. <strong>The fee in question was $48,000.</strong>",
+        "A Stipum declaration at engagement start would have taken fifteen minutes. The comparison would have shown the implementation scope gap before a single deliverable was drafted.",
+        "The SOW was not the problem. The SOW was complete. The assumption gap lived in the space the SOW never reaches."
+      ],
+      comparison: {
+        leftParty: "What Sarah declared",
+        leftItems: ["My scope includes strategic recommendations and supporting analysis.", "Two rounds of revisions.", "Client owns execution, I am advising only."],
+        rightParty: "What the client declared",
+        rightItems: ["Engagement covers strategy through to implementation roadmap.", "Consultant owns the full deliverable set including vendor recommendations and change management.", "Revisions as needed until launch-ready."],
+        gapTitle: "Implementation scope",
+        gapDetail: "Sarah assumed strategy only. Client assumed strategy through implementation."
+      },
+      typicalCounterparty: [
+        "Strategy through to implementation roadmap, vendor recommendations, and change management framework.",
+        "Consultant brings the expertise. We provide stakeholder access and internal data on request.",
+        "Consultant owns the full deliverable set. Our team reviews, approves, and manages execution.",
+        "Done means implementation-ready — deliverables approved and roadmap actionable by our team.",
+        "Whether the consultant's timeline was realistic given the scope we expected."
+      ],
       hints: [
         "Think about your deliverables, what you understood was in scope, what you assumed was excluded, and what the client believed they were buying.",
         "Think about data the client would provide, access to stakeholders, approval authority, tools and systems you assumed were available, and timeline assumptions.",
@@ -556,9 +654,33 @@
         "e.g. Done means a delivered deck approved by the sponsor in writing.",
         "e.g. I wasn't sure who had final sign-off on the recommendations."
       ],
-      reveal: "These gaps are not hypothetical. They are the assumptions your client carried into your last engagement. You are both experts. That is exactly the problem.\n\nThe client assumed revisions were unlimited because that is how their last agency worked. The consultant assumed two rounds was industry standard. The client assumed the consultant owned execution. The consultant assumed they were advising only. Nobody clarified because the kickoff felt so aligned.\n\nA real Stipum declaration captures what each party actually assumed before the engagement begins. This quiz shows you what a typical client carries. A real filing shows you what yours did. File before your next engagement starts."
     },
     insurance: {
+      casestudy: [
+        "Jennifer is a commercial property adjuster with twenty years in the field. The contractor is a licensed restoration company with fifteen years handling insurance work. They work together regularly. Authorization is issued on a $94,000 water loss claim. Work begins.",
+        "The authorization said <strong>repair and restore per industry standards, labor and material</strong>. Jennifer had reviewed the scope. The contractor had reviewed the estimate. Both parties understood the job.",
+        "<strong>Six weeks in the contractor submits a $22,000 supplement for substrate preparation.</strong>",
+        "The authorization did not define what industry standards meant for substrate prep. Neither party raised it before mobilization. Jennifer assumed standard tolerances and prior supplement approval. The contractor assumed manufacturer specification prep — grinding and leveling before surface restoration — and that field conditions found would justify supplements to follow.",
+        "Neither party was wrong about their own standard. Neither party had declared their standard before work began.",
+        "The supplement dispute ran ten weeks. <strong>The number in question was $22,000.</strong>",
+        "A Stipum declaration before work authorization would have taken fifteen minutes. The comparison would have shown the substrate prep standard and the supplement timing gap on day one.",
+        "The authorization was not the problem. The authorization was complete. The assumption gap lived in the space the authorization never reaches."
+      ],
+      comparison: {
+        leftParty: "What Jennifer declared",
+        leftItems: ["Authorization covers repair and restore per industry standards.", "Supplement approval required before additional scope.", "Standard tolerances apply."],
+        rightParty: "What the contractor declared",
+        rightItems: ["Scope includes full substrate prep to manufacturer specs.", "Industry standards means grinding and leveling before surface restoration.", "Supplement to follow field conditions found."],
+        gapTitle: "Substrate prep standard and supplement timing",
+        gapDetail: "Jennifer assumed standard tolerances and prior approval. Contractor assumed manufacturer spec prep was included."
+      },
+      typicalCounterparty: [
+        "Full restoration to manufacturer specifications including substrate prep, surface restoration, and finishing.",
+        "Authorization covers the scope. Supplements follow field conditions found during work.",
+        "Contractor manages all work. Adjuster approves supplements. Access coordinated with property owner.",
+        "Done means restored to pre-loss condition per manufacturer specifications, not industry average.",
+        "Whether the adjuster would process the supplement for substrate prep in a reasonable timeframe."
+      ],
       hints: [
         "Think about what your scope covered, what you excluded, what you assumed was a separate line item, and what the policy or authorization actually said versus what you understood.",
         "Think about supplement approval timing, documentation standards, access to the property, material availability, and what the adjuster had authority to approve.",
@@ -573,9 +695,33 @@
         "e.g. Done means all line items on the approved estimate completed and signed off.",
         "e.g. I wasn't sure whether mold remediation was in scope or a separate authorization."
       ],
-      reveal: "These gaps are not hypothetical. They are the assumptions your contractor or adjuster carried into your last claim. Both parties are experienced. Both parties were certain.\n\nThe adjuster assumed the contractor's scope included code upgrades. The contractor assumed supplements would be approved before mobilization. The adjuster assumed the documentation standard was what they always use. The contractor assumed the timeline had flexibility for material lead times. Nobody aligned on any of it before work began.\n\nA real Stipum declaration captures what each party actually assumed before work authorization. This quiz shows you what a typical counterparty carries. A real filing shows you what yours did. File before your next claim starts."
     },
     other: {
+      casestudy: [
+        "David is the VP of Regulatory Affairs at a medical device company. His team is preparing a 510(k) submission for a Class II device. They engage a regulatory consulting firm with a strong FDA track record. The kickoff is efficient. Ten weeks to submission.",
+        "The statement of work said <strong>510(k) submission package preparation, ten weeks to submission</strong>. Both parties signed it. The milestones were agreed.",
+        "<strong>Week seven the consultant delivers a gap analysis of David's quality management system and requests manufacturing documentation alignment.</strong>",
+        "David's team had not budgeted for it, staffed for it, or planned for it. The SOW did not define what submission package preparation included. The consultant assumed FDA submission support meant full submission readiness — upstream quality system review included. David assumed submission package only — the documents, not the systems behind them.",
+        "The project did not miss the submission date. The final two weeks ran at double the planned hours.",
+        "<strong>The overage was $31,000.</strong>",
+        "A Stipum declaration at engagement start would have shown the quality system scope gap before either party had spent a dollar.",
+        "The SOW was not the problem. The SOW was complete. The assumption gap lived in the space the SOW never reaches."
+      ],
+      comparison: {
+        leftParty: "What David declared",
+        leftItems: ["Engagement covers 510k submission package preparation only.", "Quality system is in place.", "Ten weeks to submission."],
+        rightParty: "What the consultant declared",
+        rightItems: ["FDA submission support includes upstream quality system review.", "Scope covers full submission readiness including manufacturing documentation alignment."],
+        gapTitle: "Quality system scope",
+        gapDetail: "David assumed submission package only. Consultant assumed full submission readiness."
+      },
+      typicalCounterparty: [
+        "Full submission readiness — quality system review, manufacturing documentation alignment, and submission package.",
+        "Client's quality system is documented and current. Manufacturing records accessible within the first two weeks.",
+        "Consultant drives the process and owns deliverables. Client reviews, approves, and provides source documentation.",
+        "Done means submission-ready with all supporting documentation aligned — not just the package itself.",
+        "Whether the client's quality system was actually in the state their internal team believed it was."
+      ],
       hints: [
         "Think about what you understood yourself to be delivering, what you excluded without saying so, and what the other party believed was included.",
         "Think about resources, access, information, approvals, and timeline assumptions you were counting on from the other party.",
@@ -590,7 +736,6 @@
         "e.g. Done means the campaign is live and the client has confirmed in writing.",
         "e.g. I wasn't sure whether paid media management was in my scope or theirs."
       ],
-      reveal: "These gaps are not hypothetical. They are the assumptions the other party carried into your last professional engagement. You are both good at what you do. That is exactly why the gaps stayed hidden.\n\nThey assumed you owned the outcome. You assumed you were responsible for the process. They assumed the timeline had flexibility. You assumed the deadline was fixed. They assumed feedback meant approval. You assumed silence meant acceptance.\n\nA real Stipum declaration captures what each party actually assumed before the work begins. This quiz shows you what a typical counterparty carries. A real filing shows you what yours did. File before your next engagement starts."
     }
   };
 
@@ -603,6 +748,22 @@
     btn.classList.add('selected');
     ctx = btn.dataset.ctx;
     document.getElementById('btn-start').disabled = false;
+  }
+
+  function esc(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function showCaseStudy() {
+    const cs = CONTEXTS[ctx].casestudy;
+    const el = document.getElementById('cs-story');
+    el.innerHTML = '';
+    cs.forEach(para => {
+      const p = document.createElement('p');
+      p.innerHTML = para;
+      el.appendChild(p);
+    });
+    showScreen('screen-casestudy');
   }
 
   function startQuiz() {
@@ -667,25 +828,48 @@
 
   function showResults() {
     const data = CONTEXTS[ctx];
-    const container = document.getElementById('reveal-container');
-    container.innerHTML = '';
+    const comp = data.comparison;
 
-    const block = document.createElement('div');
-    block.className = 'reveal-block';
+    // Build comparison grid
+    document.getElementById('comp-grid-container').innerHTML = `
+      <div class="comp-grid">
+        <div class="comp-col" id="col-left">
+          <div class="comp-party">${comp.leftParty}</div>
+          <ul class="comp-items">${comp.leftItems.map(i => `<li class="comp-item">${i}</li>`).join('')}</ul>
+        </div>
+        <div class="comp-col" id="col-right">
+          <div class="comp-party">${comp.rightParty}</div>
+          <ul class="comp-items">${comp.rightItems.map(i => `<li class="comp-item">${i}</li>`).join('')}</ul>
+        </div>
+      </div>
+      <div class="gap-box" id="gap-box">
+        <div class="gap-label">Gap identified</div>
+        <div class="gap-title">${comp.gapTitle}</div>
+        <div class="gap-detail">${comp.gapDetail}</div>
+      </div>`;
 
-    data.reveal.split('\n\n').forEach((para, i, arr) => {
-      const p = document.createElement('p');
-      p.textContent = para;
-      if (i < arr.length - 1) p.style.marginBottom = '16px';
-      block.appendChild(p);
-    });
+    // Build user comparison
+    document.getElementById('user-compare-container').innerHTML = `
+      <div class="user-compare" id="user-compare">
+        <div class="user-compare-heading">How your answers compare to a typical counterparty</div>
+        ${QUESTIONS.map((q, i) => `
+          <div class="user-q-card">
+            <div class="user-q-text">${q}</div>
+            <span class="user-q-badge badge-you">You declared</span>
+            <div class="user-q-yours">${esc(answers[i] || '—')}</div>
+            <span class="user-q-badge badge-them">Typical counterparty</span>
+            <div class="user-q-theirs">${data.typicalCounterparty[i]}</div>
+          </div>`).join('')}
+      </div>`;
 
-    container.appendChild(block);
     document.getElementById('cta-card').classList.remove('visible');
     showScreen('screen-results');
 
-    setTimeout(() => block.classList.add('visible'), 200);
-    setTimeout(() => document.getElementById('cta-card').classList.add('visible'), 800);
+    setTimeout(() => document.getElementById('col-left').classList.add('visible'), 200);
+    setTimeout(() => document.getElementById('col-right').classList.add('visible'), 400);
+    setTimeout(() => document.getElementById('gap-box').classList.add('visible'), 650);
+    setTimeout(() => document.getElementById('user-compare').classList.add('visible'), 950);
+    setTimeout(() => document.getElementById('cta-card').classList.add('visible'), 1150);
   }
 
   function showScreen(id) {
