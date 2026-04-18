@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stipum — Pilot Feedback</title>
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: #fff;
+      color: #111;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 64px 20px 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .header {
+      margin-bottom: 40px;
+    }
+
+    .header p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    .header p + p {
+      margin-top: 6px;
+      color: #888;
+      font-size: 14px;
+    }
+
+    .question {
+      margin-bottom: 32px;
+    }
+
+    .question-label {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 14px;
+      line-height: 1.4;
+    }
+
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1px solid #E5E5E5;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .radio-option:hover {
+      border-color: #bbb;
+      background: #FAFAFA;
+    }
+
+    .radio-option input[type="radio"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #0A2540;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .radio-option.selected {
+      border-color: #0A2540;
+      background: #F5F7FA;
+    }
+
+    .radio-option span {
+      font-size: 14px;
+      color: #222;
+      line-height: 1.4;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 110px;
+      padding: 12px 14px;
+      border: 1px solid #E5E5E5;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 1.65;
+      color: #111;
+      background: #fff;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    textarea:focus { border-color: #0A2540; }
+    textarea::placeholder { color: #bbb; }
+
+    .optional-label {
+      font-size: 13px;
+      color: #999;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: #0A2540;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, opacity 0.15s;
+      margin-top: 8px;
+    }
+
+    .submit-btn:hover:not(:disabled) { background: #0d2f50; }
+
+    .submit-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .success {
+      display: none;
+      padding: 48px 0;
+    }
+
+    .success p {
+      font-size: 17px;
+      font-weight: 600;
+      color: #111;
+    }
+
+    .error-msg {
+      font-size: 13px;
+      color: #c0392b;
+      margin-top: 12px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <p>You recently completed a Stipum filing.</p>
+    <p>Two quick questions — takes less than a minute.</p>
+  </div>
+
+  <form id="feedback-form">
+
+    <!-- Question 1 -->
+    <div class="question">
+      <label class="question-label">Did this replace something you normally do, or was it extra?</label>
+      <div class="radio-group">
+        <label class="radio-option" id="opt-a">
+          <input type="radio" name="answer_1" value="Replaced something I normally do" onchange="onRadioChange(this)">
+          <span>Replaced something I normally do</span>
+        </label>
+        <label class="radio-option" id="opt-b">
+          <input type="radio" name="answer_1" value="Was an additional step" onchange="onRadioChange(this)">
+          <span>Was an additional step</span>
+        </label>
+        <label class="radio-option" id="opt-c">
+          <input type="radio" name="answer_1" value="Not sure" onchange="onRadioChange(this)">
+          <span>Not sure</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="question">
+      <span class="optional-label">Anything else you want to tell us about the experience? <em>(optional)</em></span>
+      <textarea id="answer_2" name="answer_2" placeholder="Optional feedback..."></textarea>
+    </div>
+
+    <!-- Hidden fields -->
+    <!--
+      framing_version is read from the URL query param ?v=A, ?v=B, or ?v=C.
+      Each invitation email or link should include the appropriate version.
+      Example: https://feedback.stipum.com/?v=B
+      If no param is present it defaults to "unknown".
+    -->
+    <input type="hidden" id="framing_version" name="framing_version">
+
+    <button type="submit" class="submit-btn" id="submit-btn" disabled>Submit</button>
+    <div class="error-msg" id="error-msg">Something went wrong. Please try again.</div>
+
+  </form>
+
+  <div class="success" id="success-state">
+    <p>Thanks — this is really helpful.</p>
+  </div>
+
+</div>
+<script>
+  // ─────────────────────────────────────────────
+  // WEBHOOK ENDPOINT
+  // Replace this URL with your Google Apps Script
+  // web app URL or any POST endpoint.
+  // See instructions below for Google Sheets setup.
+  const ENDPOINT = 'https://YOUR_ENDPOINT_HERE';
+  // ─────────────────────────────────────────────
+
+  // Read framing_version from URL param (?v=A / ?v=B / ?v=C)
+  const params = new URLSearchParams(window.location.search);
+  const framingVersion = params.get('v') || 'unknown';
+  document.getElementById('framing_version').value = framingVersion;
+
+  function onRadioChange(radio) {
+    // Update visual selection state
+    document.querySelectorAll('.radio-option').forEach(el => el.classList.remove('selected'));
+    radio.closest('.radio-option').classList.add('selected');
+    // Enable submit
+    document.getElementById('submit-btn').disabled = false;
+  }
+
+  document.getElementById('feedback-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+
+    const payload = {
+      answer_1: document.querySelector('input[name="answer_1"]:checked')?.value || '',
+      answer_2: document.getElementById('answer_2').value.trim(),
+      timestamp: new Date().toISOString(),
+      framing_version: framingVersion
+    };
+
+    try {
+      await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      document.getElementById('feedback-form').style.display = 'none';
+      document.getElementById('success-state').style.display = 'block';
+    } catch (err) {
+      document.getElementById('error-msg').style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Submit';
+    }
+  });
+</script>
+</body>
+</html>
