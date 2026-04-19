@@ -393,13 +393,6 @@
   });
 
   function showSuccess() {
-    localStorage.setItem('stipum_feedback_done', '1');
-    document.getElementById('feedback-form').style.display = 'none';
-    document.getElementById('header').style.display = 'none';
-    document.getElementById('success-state').style.display = 'block';
-  }
-
-  if (localStorage.getItem('stipum_feedback_done')) {
     document.getElementById('feedback-form').style.display = 'none';
     document.getElementById('header').style.display = 'none';
     document.getElementById('success-state').style.display = 'block';
