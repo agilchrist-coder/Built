@@ -176,7 +176,7 @@
 <body>
 <div class="container">
 
-  <div class="header">
+  <div class="header" id="header">
     <p>You recently completed a Stipum filing.</p>
     <p>A few quick questions — takes about two minutes.</p>
   </div>
@@ -388,10 +388,22 @@
     });
 
     setTimeout(function() {
-      document.getElementById('feedback-form').style.display = 'none';
-      document.getElementById('success-state').style.display = 'block';
+      showSuccess();
     }, 1000);
   });
+
+  function showSuccess() {
+    localStorage.setItem('stipum_feedback_done', '1');
+    document.getElementById('feedback-form').style.display = 'none';
+    document.getElementById('header').style.display = 'none';
+    document.getElementById('success-state').style.display = 'block';
+  }
+
+  if (localStorage.getItem('stipum_feedback_done')) {
+    document.getElementById('feedback-form').style.display = 'none';
+    document.getElementById('header').style.display = 'none';
+    document.getElementById('success-state').style.display = 'block';
+  }
 </script>
 </body>
 </html>
