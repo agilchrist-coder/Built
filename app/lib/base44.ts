@@ -1,6 +1,9 @@
-// Stipum — Base44 API client
-// All protocol logic lives in Base44 functions at blind-fold-sync.base44.app
-// This file calls those functions via plain fetch.
+// Stipum — Base44 client
+// Entity CRUD (FormInstance, FormSubmission) is handled directly by the SDK.
+// Custom functions (submitAnswers, getReveal, etc.) are called via SDK too.
+// Base44 enforces all blind protocol logic server-side.
+
+import { createClient } from '@base44/sdk';
 
 import type {
   FormField,
@@ -10,23 +13,10 @@ import type {
   ImmutableRecord,
 } from './types';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE44_URL || 'https://blind-fold-sync.base44.app';
+// SDK auto-detects appId from the Base44 environment
+const base44 = createClient();
 
-async function fn<T>(name: string, body: unknown): Promise<T> {
-  const res = await fetch(`${BASE_URL}/functions/${name}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-    cache: 'no-store',
-  });
-
-  if (!res.ok) {
-    const text = await res.text().catch(() => res.statusText);
-    throw new Error(`Base44 ${name} → ${res.status}: ${text}`);
-  }
-
-  return res.json() as Promise<T>;
-}
+// ─── Entity CRUD (SDK talks to database directly) ────────────────────────────
 
 // BASE44 CALL — create a new form instance
 export async function createFormInstance(
@@ -34,18 +24,20 @@ export async function createFormInstance(
   creatorEmail: string,
   partyBEmail: string,
 ): Promise<FormInstance> {
-  return fn<FormInstance>('createFormInstance', { fields, creatorEmail, partyBEmail });
+  return base44.entities.FormInstance.create({ fields, creatorEmail, partyBEmail, status: 'pending' });
 }
 
 // BASE44 CALL — get a form instance by ID
 export async function getFormInstance(id: string): Promise<FormInstance> {
-  return fn<FormInstance>('getFormInstance', { id });
+  return base44.entities.FormInstance.get(id);
 }
 
 // BASE44 CALL — list all form instances
 export async function listFormInstances(): Promise<FormInstance[]> {
-  return fn<FormInstance[]>('listFormInstances', {});
+  return base44.entities.FormInstance.list();
 }
+
+// ─── Custom functions (server-side enforced protocol logic) ──────────────────
 
 // BASE44 CALL — submit one party's answers blindly
 export async function submitAnswers(
@@ -53,12 +45,12 @@ export async function submitAnswers(
   partyId: 'partyA' | 'partyB',
   answers: Record<string, string>,
 ): Promise<void> {
-  return fn('submitAnswers', { instanceId, partyId, answers });
+  return base44.functions.submitAnswers({ instanceId, partyId, answers });
 }
 
 // BASE44 CALL — get simultaneous reveal (only after both parties submitted)
 export async function getReveal(instanceId: string): Promise<RevealResult> {
-  return fn<RevealResult>('getReveal', { instanceId });
+  return base44.functions.getReveal({ instanceId });
 }
 
 // BASE44 CALL — record one party's acknowledgment
@@ -66,20 +58,21 @@ export async function acknowledgeReveal(
   instanceId: string,
   partyId: 'partyA' | 'partyB',
 ): Promise<AcknowledgmentStatus> {
-  return fn<AcknowledgmentStatus>('acknowledgeReveal', { instanceId, partyId });
+  return base44.functions.acknowledgeReveal({ instanceId, partyId });
 }
 
 // BASE44 CALL — get final immutable record after both parties acknowledged
 export async function getRecord(instanceId: string): Promise<ImmutableRecord> {
-  return fn<ImmutableRecord>('getRecord', { instanceId });
+  return base44.functions.getRecord({ instanceId });
 }
 
 // BASE44 CALL — generate PDF of the immutable record
 export async function generateRecordPdf(instanceId: string): Promise<{ pdfUrl: string }> {
-  return fn<{ pdfUrl: string }>('generateRecordPdf', { instanceId });
+  return base44.functions.generateRecordPdf({ instanceId });
 }
 
-// Polling helper
+// ─── Polling helper ──────────────────────────────────────────────────────────
+
 export async function pollUntil<T>(
   fn: () => Promise<T>,
   predicate: (result: T) => boolean,
