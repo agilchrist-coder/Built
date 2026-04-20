@@ -16,6 +16,9 @@ import type {
 // SDK initialized with appId derived from the Base44 app URL
 const base44 = createClient({ appId: 'blind-fold-sync' });
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const fns = base44.functions as Record<string, (args: unknown) => Promise<unknown>>;
+
 // ─── Entity CRUD (SDK talks to database directly) ────────────────────────────
 
 // BASE44 CALL — create a new form instance
@@ -45,12 +48,12 @@ export async function submitAnswers(
   partyId: 'partyA' | 'partyB',
   answers: Record<string, string>,
 ): Promise<void> {
-  return base44.functions.submitAnswers({ instanceId, partyId, answers });
+  return fns['submitAnswers']({ instanceId, partyId, answers }) as Promise<void>;
 }
 
 // BASE44 CALL — get simultaneous reveal (only after both parties submitted)
 export async function getReveal(instanceId: string): Promise<RevealResult> {
-  return base44.functions.getReveal({ instanceId });
+  return fns['getReveal']({ instanceId }) as Promise<RevealResult>;
 }
 
 // BASE44 CALL — record one party's acknowledgment
@@ -58,17 +61,17 @@ export async function acknowledgeReveal(
   instanceId: string,
   partyId: 'partyA' | 'partyB',
 ): Promise<AcknowledgmentStatus> {
-  return base44.functions.acknowledgeReveal({ instanceId, partyId });
+  return fns['acknowledgeReveal']({ instanceId, partyId }) as Promise<AcknowledgmentStatus>;
 }
 
 // BASE44 CALL — get final immutable record after both parties acknowledged
 export async function getRecord(instanceId: string): Promise<ImmutableRecord> {
-  return base44.functions.getRecord({ instanceId });
+  return fns['getRecord']({ instanceId }) as Promise<ImmutableRecord>;
 }
 
 // BASE44 CALL — generate PDF of the immutable record
 export async function generateRecordPdf(instanceId: string): Promise<{ pdfUrl: string }> {
-  return base44.functions.generateRecordPdf({ instanceId });
+  return fns['generateRecordPdf']({ instanceId }) as Promise<{ pdfUrl: string }>;
 }
 
 // ─── Polling helper ──────────────────────────────────────────────────────────
