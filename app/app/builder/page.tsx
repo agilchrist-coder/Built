@@ -1,10 +1,6 @@
-import type { Metadata } from 'next';
-import { FormBuilder } from '@/components/FormBuilder';
-
-export const metadata: Metadata = {
-  title: 'Form Builder',
-};
-
+'use client';
+import { useEffect } from 'react';
 export default function BuilderPage() {
-  return <FormBuilder />;
+  useEffect(() => { window.location.href = 'https://app.stipum.com'; }, []);
+  return null;
 }
