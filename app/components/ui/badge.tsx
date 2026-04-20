@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-type BadgeVariant = 'default' | 'success' | 'warning' | 'destructive' | 'outline';
+type BadgeVariant = 'default' | 'secondary' | 'success' | 'warning' | 'destructive' | 'outline';
 
 const variantClasses: Record<BadgeVariant, string> = {
   default:
@@ -11,6 +11,8 @@ const variantClasses: Record<BadgeVariant, string> = {
     'bg-amber-100 text-amber-800',
   destructive:
     'bg-red-100 text-red-800',
+  secondary:
+    'bg-slate-100 text-slate-700',
   outline:
     'border border-slate-300 text-slate-700 bg-transparent',
 };
