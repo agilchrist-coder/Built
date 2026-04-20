@@ -32,8 +32,8 @@ jobs:
 
       - name: Assemble deployment directory
         run: |
-          mkdir -p _site
-          cp -r app/out/. _site/
+          mkdir -p _site/app
+          cp -r app/out/. _site/app/
           cp feedback.html _site/feedback.html
           cp stipum_landing.html _site/stipum_landing.html
           cp robots.txt _site/robots.txt
