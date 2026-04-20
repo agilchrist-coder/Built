@@ -1,11 +1,10 @@
-// Stipum — Base44 SDK client
-// All protocol integrity (blind submissions, simultaneous reveal, immutable records)
-// is enforced by Base44. This file is a thin wrapper around the Base44 SDK.
+// Stipum — Base44 API client (plain fetch, no external SDK)
+// All protocol integrity is enforced by Base44.
+// Replace BASE_URL with your Base44 app domain when wiring up.
 //
-// SDK docs: https://base44.app/docs/sdk
-// appId is auto-detected by the SDK from the environment.
-
-import { createClient } from '@base44/sdk';
+// TODO: swap for @base44/sdk once confirmed available on npm:
+//   npm install @base44/sdk
+//   const base44 = createClient(); // auto-detects appId
 
 import type {
   FormField,
@@ -15,97 +14,84 @@ import type {
   ImmutableRecord,
 } from './types';
 
-// SDK auto-detects appId from the Base44 environment (no manual config needed)
-const base44 = createClient();
+const BASE_URL = process.env.NEXT_PUBLIC_BASE44_URL || 'https://api.base44.app';
 
-// ---------------------------------------------------------------------------
-// Entity CRUD — handled automatically by Base44 SDK
-// ---------------------------------------------------------------------------
+async function call<T>(
+  method: 'GET' | 'POST',
+  path: string,
+  body?: unknown,
+  query?: Record<string, string>,
+): Promise<T> {
+  const url = new URL(`${BASE_URL}${path}`);
+  if (query) Object.entries(query).forEach(([k, v]) => url.searchParams.set(k, v));
 
-/**
- * BASE44 CALL — Creates a new blind-form instance.
- * Base44 stores the field definitions and associates both party emails.
- */
+  const res = await fetch(url.toString(), {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
+    cache: method === 'POST' ? 'no-store' : 'default',
+  });
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => res.statusText);
+    throw new Error(`Base44 ${method} ${path} → ${res.status}: ${text}`);
+  }
+
+  return res.json() as Promise<T>;
+}
+
+// BASE44 CALL — create a new form instance
 export async function createFormInstance(
   fields: FormField[],
   creatorEmail: string,
   partyBEmail: string,
 ): Promise<FormInstance> {
-  return base44.entities.FormInstance.create({ fields, creatorEmail, partyBEmail });
+  return call<FormInstance>('POST', '/forms/instances', { fields, creatorEmail, partyBEmail });
 }
 
-/**
- * BASE44 CALL — Fetches a single form instance by ID.
- */
+// BASE44 CALL — get a form instance by ID
 export async function getFormInstance(id: string): Promise<FormInstance> {
-  return base44.entities.FormInstance.get(id);
+  return call<FormInstance>('GET', `/forms/instances/${id}`);
 }
 
-/**
- * BASE44 CALL — Lists all form instances for the current user.
- */
+// BASE44 CALL — list all form instances for current user
 export async function listFormInstances(): Promise<FormInstance[]> {
-  return base44.entities.FormInstance.list();
+  return call<FormInstance[]>('GET', '/forms/instances');
 }
 
-// ---------------------------------------------------------------------------
-// Custom backend functions (deployed in Base44 functions/ directory)
-// ---------------------------------------------------------------------------
-
-/**
- * BASE44 CALL — Submits one party's answers blindly.
- * Base44 stores answers; neither party can see the other's until both submit.
- */
+// BASE44 CALL — submit one party's answers blindly
 export async function submitAnswers(
   instanceId: string,
   partyId: 'partyA' | 'partyB',
   answers: Record<string, string>,
 ): Promise<void> {
-  return base44.functions.submitAnswers({ instanceId, partyId, answers });
+  return call('POST', '/functions/submitAnswers', { instanceId, partyId, answers });
 }
 
-/**
- * BASE44 CALL — Fetches the simultaneous reveal payload.
- * Only available after both parties have submitted.
- * Base44 returns an error if called before both submissions are in.
- */
+// BASE44 CALL — get simultaneous reveal (only after both parties submitted)
 export async function getReveal(instanceId: string): Promise<RevealResult> {
-  return base44.functions.getReveal({ instanceId });
+  return call<RevealResult>('POST', '/functions/getReveal', { instanceId });
 }
 
-/**
- * BASE44 CALL — Records one party's acknowledgment of the revealed answers.
- */
+// BASE44 CALL — record one party's acknowledgment
 export async function acknowledgeReveal(
   instanceId: string,
   partyId: 'partyA' | 'partyB',
 ): Promise<AcknowledgmentStatus> {
-  return base44.functions.acknowledgeReveal({ instanceId, partyId });
+  return call<AcknowledgmentStatus>('POST', '/functions/acknowledgeReveal', { instanceId, partyId });
 }
 
-/**
- * BASE44 CALL — Retrieves the final immutable record after both parties acknowledge.
- * Includes SHA hash and PDF URL.
- */
+// BASE44 CALL — get final immutable record after both parties acknowledged
 export async function getRecord(instanceId: string): Promise<ImmutableRecord> {
-  return base44.functions.getRecord({ instanceId });
+  return call<ImmutableRecord>('POST', '/functions/getRecord', { instanceId });
 }
 
-/**
- * BASE44 CALL — Generates (or retrieves) the PDF for the immutable record.
- */
+// BASE44 CALL — generate PDF of the immutable record
 export async function generateRecordPdf(instanceId: string): Promise<{ pdfUrl: string }> {
-  return base44.functions.generateRecordPdf({ instanceId });
+  return call<{ pdfUrl: string }>('POST', '/functions/generateRecordPdf', { instanceId });
 }
 
-// ---------------------------------------------------------------------------
-// Polling helper (used in fill and reveal pages)
-// ---------------------------------------------------------------------------
-
-/**
- * Polls Base44 by calling `fn` every `intervalMs` ms until `predicate`
- * returns true or `maxAttempts` is exceeded.
- */
+// Polling helper
 export async function pollUntil<T>(
   fn: () => Promise<T>,
   predicate: (result: T) => boolean,
@@ -113,28 +99,16 @@ export async function pollUntil<T>(
   maxAttempts = 120,
 ): Promise<T> {
   let attempts = 0;
-
   return new Promise((resolve, reject) => {
     const tick = async () => {
       attempts++;
       try {
         const result = await fn();
-        if (predicate(result)) {
-          resolve(result);
-          return;
-        }
-      } catch {
-        // Swallow transient errors while waiting for Base44 status change
-      }
-
-      if (attempts >= maxAttempts) {
-        reject(new Error('Polling timed out waiting for Base44 status change.'));
-        return;
-      }
-
+        if (predicate(result)) { resolve(result); return; }
+      } catch { /* swallow while waiting */ }
+      if (attempts >= maxAttempts) { reject(new Error('Polling timed out.')); return; }
       setTimeout(tick, intervalMs);
     };
-
     tick();
   });
 }
