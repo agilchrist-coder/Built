@@ -13,8 +13,8 @@ import type {
   ImmutableRecord,
 } from './types';
 
-// SDK auto-detects appId from the Base44 environment
-const base44 = createClient();
+// SDK initialized with appId derived from the Base44 app URL
+const base44 = createClient({ appId: 'blind-fold-sync' });
 
 // ─── Entity CRUD (SDK talks to database directly) ────────────────────────────
 
