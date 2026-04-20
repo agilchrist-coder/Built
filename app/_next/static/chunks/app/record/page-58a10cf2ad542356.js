@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[314],{343:(e,s,t)=>{"use strict";t.r(s),t.d(s,{default:()=>u});var n=t(2115);function u(){return(0,n.useEffect)(()=>{window.location.href="https://app.stipum.com"},[]),null}},7345:(e,s,t)=>{Promise.resolve().then(t.bind(t,343))}},e=>{var s=s=>e(e.s=s);e.O(0,[441,684,358],()=>s(7345)),_N_E=e.O()}]);
