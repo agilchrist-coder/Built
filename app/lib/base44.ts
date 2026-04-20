@@ -17,7 +17,7 @@ import type {
 const base44 = createClient({ appId: 'blind-fold-sync' });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const fns = base44.functions as Record<string, (args: unknown) => Promise<unknown>>;
+const fns = base44.functions as unknown as Record<string, (args: unknown) => Promise<unknown>>;
 
 // ─── Entity CRUD (SDK talks to database directly) ────────────────────────────
 
