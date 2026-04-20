@@ -1,10 +1,6 @@
-// Stipum — Base44 API client (plain fetch, no external SDK)
-// All protocol integrity is enforced by Base44.
-// Replace BASE_URL with your Base44 app domain when wiring up.
-//
-// TODO: swap for @base44/sdk once confirmed available on npm:
-//   npm install @base44/sdk
-//   const base44 = createClient(); // auto-detects appId
+// Stipum — Base44 API client
+// All protocol logic lives in Base44 functions at blind-fold-sync.base44.app
+// This file calls those functions via plain fetch.
 
 import type {
   FormField,
@@ -14,27 +10,19 @@ import type {
   ImmutableRecord,
 } from './types';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE44_URL || 'https://api.base44.app';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE44_URL || 'https://blind-fold-sync.base44.app';
 
-async function call<T>(
-  method: 'GET' | 'POST',
-  path: string,
-  body?: unknown,
-  query?: Record<string, string>,
-): Promise<T> {
-  const url = new URL(`${BASE_URL}${path}`);
-  if (query) Object.entries(query).forEach(([k, v]) => url.searchParams.set(k, v));
-
-  const res = await fetch(url.toString(), {
-    method,
+async function fn<T>(name: string, body: unknown): Promise<T> {
+  const res = await fetch(`${BASE_URL}/functions/${name}`, {
+    method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
-    cache: method === 'POST' ? 'no-store' : 'default',
+    body: JSON.stringify(body),
+    cache: 'no-store',
   });
 
   if (!res.ok) {
     const text = await res.text().catch(() => res.statusText);
-    throw new Error(`Base44 ${method} ${path} → ${res.status}: ${text}`);
+    throw new Error(`Base44 ${name} → ${res.status}: ${text}`);
   }
 
   return res.json() as Promise<T>;
@@ -46,17 +34,17 @@ export async function createFormInstance(
   creatorEmail: string,
   partyBEmail: string,
 ): Promise<FormInstance> {
-  return call<FormInstance>('POST', '/forms/instances', { fields, creatorEmail, partyBEmail });
+  return fn<FormInstance>('createFormInstance', { fields, creatorEmail, partyBEmail });
 }
 
 // BASE44 CALL — get a form instance by ID
 export async function getFormInstance(id: string): Promise<FormInstance> {
-  return call<FormInstance>('GET', `/forms/instances/${id}`);
+  return fn<FormInstance>('getFormInstance', { id });
 }
 
-// BASE44 CALL — list all form instances for current user
+// BASE44 CALL — list all form instances
 export async function listFormInstances(): Promise<FormInstance[]> {
-  return call<FormInstance[]>('GET', '/forms/instances');
+  return fn<FormInstance[]>('listFormInstances', {});
 }
 
 // BASE44 CALL — submit one party's answers blindly
@@ -65,12 +53,12 @@ export async function submitAnswers(
   partyId: 'partyA' | 'partyB',
   answers: Record<string, string>,
 ): Promise<void> {
-  return call('POST', '/functions/submitAnswers', { instanceId, partyId, answers });
+  return fn('submitAnswers', { instanceId, partyId, answers });
 }
 
 // BASE44 CALL — get simultaneous reveal (only after both parties submitted)
 export async function getReveal(instanceId: string): Promise<RevealResult> {
-  return call<RevealResult>('POST', '/functions/getReveal', { instanceId });
+  return fn<RevealResult>('getReveal', { instanceId });
 }
 
 // BASE44 CALL — record one party's acknowledgment
@@ -78,17 +66,17 @@ export async function acknowledgeReveal(
   instanceId: string,
   partyId: 'partyA' | 'partyB',
 ): Promise<AcknowledgmentStatus> {
-  return call<AcknowledgmentStatus>('POST', '/functions/acknowledgeReveal', { instanceId, partyId });
+  return fn<AcknowledgmentStatus>('acknowledgeReveal', { instanceId, partyId });
 }
 
 // BASE44 CALL — get final immutable record after both parties acknowledged
 export async function getRecord(instanceId: string): Promise<ImmutableRecord> {
-  return call<ImmutableRecord>('POST', '/functions/getRecord', { instanceId });
+  return fn<ImmutableRecord>('getRecord', { instanceId });
 }
 
 // BASE44 CALL — generate PDF of the immutable record
 export async function generateRecordPdf(instanceId: string): Promise<{ pdfUrl: string }> {
-  return call<{ pdfUrl: string }>('POST', '/functions/generateRecordPdf', { instanceId });
+  return fn<{ pdfUrl: string }>('generateRecordPdf', { instanceId });
 }
 
 // Polling helper
