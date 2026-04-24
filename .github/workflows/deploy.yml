@@ -40,6 +40,8 @@ jobs:
           cp feedback.html _site/feedback.html
           cp stipum_landing.html _site/stipum_landing.html
           cp robots.txt _site/robots.txt
+          cp favicon.ico _site/favicon.ico
+          cp favicon.png _site/favicon.png
           touch _site/.nojekyll
 
       - name: Deploy to gh-pages branch
